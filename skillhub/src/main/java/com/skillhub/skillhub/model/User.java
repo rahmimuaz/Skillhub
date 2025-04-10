@@ -3,55 +3,28 @@ package com.skillhub.skillhub.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("users")
+@Document(collection = "users")
 public class User {
     @Id
     private String id;
-
     private String name;
     private String email;
-    private String provider;
+    private String password; // New field
+    private String provider; // "manual" or "google"
 
-    // Constructors
-    public User() {}
+    // Getters and Setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public User(String name, String email, String provider) {
-        this.name = name;
-        this.email = email;
-        this.provider = provider;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    // Getters
-    public String getId() {
-        return id;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getName() {
-        return name;
-    }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getProvider() {
-        return provider;
-    }
-
-    // Setters
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setProvider(String provider) {
-        this.provider = provider;
-    }
+    public String getProvider() { return provider; }
+    public void setProvider(String provider) { this.provider = provider; }
 }
