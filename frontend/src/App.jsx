@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google"; 
+import Login from "./pages/LoginPage/Login"
+import Register from "./pages/LoginPage/Register";
+import Users from "./pages/LoginPage/Users";
+import Home from "./pages/HomePage/Home"; 
+import LearningProgressPage from "./pages/LearningProgressPage/LearningProgressPage.jsx";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <GoogleOAuthProvider clientId="235074436580-fekrpapo667arbo0jkqa9nmprcpqul96.apps.googleusercontent.com">
+      <Router>
+        <Routes>
+          {/* Fix route for Home page */}
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={< Home/>} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/learn" element={<LearningProgressPage />} />
 
-export default App
+        </Routes>
+      </Router>
+    </GoogleOAuthProvider>
+  );
+};
+
+export default App;
