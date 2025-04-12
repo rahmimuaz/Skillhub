@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { GoogleOAuthProvider } from "@react-oauth/google"; // Import GoogleOAuthProvider
-import Login from "./pages/Login"
-import Register from "./pages/Register";
-import Users from "./pages/Users";
-import Home from "./pages/Home"; // Import Home page
-import LearningProgressPage from "./pages/LearningProgressPage";
+import { GoogleOAuthProvider } from "@react-oauth/google"; 
+import Login from "./pages/LoginPage/Login"
+import Register from "./pages/LoginPage/Register";
+import Users from "./pages/LoginPage/Users";
+import Home from "./pages/HomePage/Home"; 
+import LearningProgressPage from "./pages/LearningProgressPage/LearningProgressPage.jsx";
 
 const App = () => {
   return (

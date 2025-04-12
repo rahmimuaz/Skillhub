@@ -14,7 +14,7 @@ const Register = () => {
     try {
       const response = await axios.post("http://localhost:9006/auth/register", { name, email, password });
       if (response.data === "User registered successfully!") {
-        navigate("/login");
+        navigate("/home");
       } else {
         setError(response.data); // Show the error message from backend (e.g., email already exists)
       }
