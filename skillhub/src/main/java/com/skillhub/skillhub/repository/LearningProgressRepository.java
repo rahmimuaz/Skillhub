@@ -7,4 +7,4 @@ import java.util.List;
 public interface LearningProgressRepository extends MongoRepository<LearningProgress, String> {
     List<LearningProgress> findByUserId(String userId);
     List<LearningProgress> findByPlanId(String planId);
-}
+} 

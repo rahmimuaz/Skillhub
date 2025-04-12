@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class LearningProgress {
 
     @Id
-    private String id;
+    private String id; 
     private String userId;  // Reference to User
     private String planId;  // Reference to Plan
     private String lessonId;

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/learningProgress")
+@RequestMapping("/api/learningProgress") 
 @CrossOrigin(origins = "*")
 public class LearningProgressController {
 
