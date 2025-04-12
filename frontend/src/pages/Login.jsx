@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
+import './Login.css';  // Importing the CSS file
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,54 +9,72 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Manual login handler
   const handleManualLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:9006/auth/login", { email, password });
+      const response = await axios.post("http://localhost:9006/auth/login", {
+        email,
+        password,
+      });
+
       if (response.data === "Login successful!") {
-        navigate("/users");
+        navigate("/home");
       } else {
         setError("Invalid email or password");
       }
-    } catch (error) {
-      setError("An error occurred during login");
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("An error occurred during login. Please try again.");
     }
   };
 
-  const handleGoogleLogin = async (response) => {
-    // Handle Google login logic here, usually you would send the token to your backend for validation.
-    const token = response.credential;
-    // Send token to backend to authenticate user
-    try {
-      const response = await axios.post("http://localhost:9006/oauth2/authorize", { token });
-      navigate("/users");
-    } catch (error) {
-      setError("Google login failed");
-    }
+  // Google login handler - redirects to backend
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:9006/oauth2/authorization/google";
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleManualLogin}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <button type="submit">Login</button>
+    <div className="login-container">
+      <h2 className="login-title">Login</h2>
+
+      <form onSubmit={handleManualLogin} className="login-form">
+        <div className="input-group">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            required
+            className="input-field"
+          />
+        </div>
+        <div className="input-group">
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+            className="input-field"
+          />
+        </div>
+        <div>
+          <button type="submit" className="submit-button">
+            Login
+          </button>
+        </div>
       </form>
-      <p>{error}</p>
-      <GoogleLogin onSuccess={handleGoogleLogin} onError={() => console.log("Login Failed")} />
+
+      {error && <p className="error-message">{error}</p>}
+
+      <hr className="separator" />
+
+      <div>
+        <button onClick={handleGoogleLogin} className="google-login-button">
+          Login with Google
+        </button>
+      </div>
     </div>
   );
 };

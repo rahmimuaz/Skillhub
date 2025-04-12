@@ -43,6 +43,6 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         }
 
         // Redirect to home or dashboard
-        response.sendRedirect("/");
+        response.sendRedirect("http://localhost:5173/home");
     }
 }
