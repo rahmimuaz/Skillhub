@@ -12,7 +12,6 @@ public class LearningProgress {
     private String userId;  // Reference to User
     private String planId;  // Reference to Plan
     private String lessonId;
-    private String lessondes;
     private int completionProgress; // Percentage 0-100
     private String status;  // "In Progress" or "Completed"
     private LocalDateTime timestamp;
