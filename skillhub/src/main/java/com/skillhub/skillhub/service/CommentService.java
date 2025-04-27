@@ -40,10 +40,6 @@ public class CommentService {
     }
 
     public void deleteComment(String postId, String id) {
-        Comment existingComment = commentRepository.findById(id)
-                .filter(c -> c.getPostId().equals(postId))
-                .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id + " and postId: " + postId));
-
         commentRepository.deleteById(id);
     }
 }
