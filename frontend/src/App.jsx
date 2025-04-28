@@ -5,11 +5,7 @@ import Login from "./pages/LoginPage/Login"
 import Register from "./pages/LoginPage/Register";
 import Users from "./pages/LoginPage/Users";
 import Home from "./pages/HomePage/Home"; 
-import LearningProgressPage from "./pages/LearningProgressPage/LearningProgressPage.jsx";
-
 import HomePage from "./pages/HomePage";
-import CoursePage from "./pages/CoursePage";
-
 
 const App = () => {
   return (
@@ -21,10 +17,8 @@ const App = () => {
           <Route path="/home" element={< Home/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/users" element={<Users />} />
-          <Route path="/learn" element={<LearningProgressPage />} />
 
           <Route path="/hh" element={<HomePage />} />
-        <Route path="/course/:id" element={<CoursePage />} />
 
         </Routes>
       </Router>
