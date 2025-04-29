@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./Login.css"  // Importing the CSS file
+import "./Login.css";
+import { saveSession } from "../../utils/SessionManager"; // ✅ Import session manager
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,7 +10,6 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Manual login handler
   const handleManualLogin = async (e) => {
     e.preventDefault();
     try {
@@ -19,6 +19,7 @@ const Login = () => {
       });
 
       if (response.data === "Login successful!") {
+        saveSession({ email }); // ✅ Save session
         navigate("/home");
       } else {
         setError("Invalid email or password");
@@ -29,7 +30,6 @@ const Login = () => {
     }
   };
 
-  // Google login handler - redirects to backend
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:9006/oauth2/authorization/google";
   };
