@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { saveSession } from "../../utils/SessionManager"; // ✅ Import session manager
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -12,13 +13,20 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:9006/auth/register", { name, email, password });
+      const response = await axios.post("http://localhost:9006/auth/register", {
+        name,
+        email,
+        password,
+      });
+
       if (response.data === "User registered successfully!") {
+        saveSession({ email }); // ✅ Save user session after registration
         navigate("/home");
       } else {
-        setError(response.data); // Show the error message from backend (e.g., email already exists)
+        setError(response.data); // e.g., "Email already exists"
       }
     } catch (error) {
+      console.error("Registration error:", error);
       setError("An error occurred during registration");
     }
   };
@@ -50,7 +58,7 @@ const Register = () => {
         />
         <button type="submit">Register</button>
       </form>
-      <p>{error}</p>
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 };
