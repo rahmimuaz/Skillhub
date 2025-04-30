@@ -20,11 +20,11 @@ public class CommentController {
 
     @PostMapping
     public Comment addComment(@RequestBody Comment comment) {
-        return commentService.addComment(comment);
+        return commentService.addComment(null, comment);
     }
 
     @DeleteMapping("/{id}")
     public void deleteComment(@PathVariable String id) {
-        commentService.deleteComment(id);
+        commentService.deleteComment(id, id);
     }
 }
