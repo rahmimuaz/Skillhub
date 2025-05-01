@@ -1,5 +1,6 @@
 package com.skillhub.skillhub.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,10 @@ public class CommentService {
     }
 
     public void deleteComment(String postId, String id) {
+        commentRepository.findById(id)
+                .filter(c -> c.getPostId().equals(postId))
+                .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id + " and postId: " + postId));
+
         commentRepository.deleteById(id);
     }
 }
