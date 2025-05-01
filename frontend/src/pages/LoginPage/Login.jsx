@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import { saveSession } from "../../utils/SessionManager"; // ✅ Import session manager
+import { saveSession } from "../../utils/SessionManager";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,8 +18,9 @@ const Login = () => {
         password,
       });
 
-      if (response.data === "Login successful!") {
-        saveSession({ email }); // ✅ Save session
+      if (response.data.message === "Login successful!" && response.data.user) {
+        const { name, email } = response.data.user;
+        saveSession({ name, email }); // ✅ Save name and email
         navigate("/home");
       } else {
         setError("Invalid email or password");
