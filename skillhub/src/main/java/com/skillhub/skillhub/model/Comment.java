@@ -1,18 +1,16 @@
 package com.skillhub.skillhub.model;
 import org.springframework.data.annotation.Id;  // Correct import for @Id
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.time.LocalDateTime;
 
 @Document(collection = "comments")
 public class Comment {
-    @Id  // Now this will work with the correct import
+    @Id
     private String id;
     private String postId;
-    private String userId;
-    private String content;
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private String text;
+    private String author;
 
-    // Getters and Setters remain the same
+    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -29,27 +27,19 @@ public class Comment {
         this.postId = postId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getText() {
+        return text;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getContent() {
-        return content;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }
