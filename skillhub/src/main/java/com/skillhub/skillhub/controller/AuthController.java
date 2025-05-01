@@ -2,14 +2,17 @@ package com.skillhub.skillhub.controller;
 
 import com.skillhub.skillhub.model.User;
 import com.skillhub.skillhub.repository.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/auth") 
+@RequestMapping("/auth")
 public class AuthController {
 
     private final UserRepository userRepository;
@@ -36,16 +39,29 @@ public class AuthController {
 
     // ✅ LOGIN API
     @PostMapping("/login")
-    public String loginUser(@RequestBody User user) {
+    public ResponseEntity<?> loginUser(@RequestBody User user) {
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser.isPresent()) {
             User dbUser = existingUser.get();
             if (passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
-                return "Login successful!";
+                // Return message + user data
+                return ResponseEntity.ok(
+                    Map.of(
+                        "message", "Login successful!",
+                        "user", Map.of(
+                            "name", dbUser.getName(),
+                            "email", dbUser.getEmail()
+                        )
+                    )
+                );
             } else {
-                return "Invalid password!";
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("message", "Invalid password!"));
             }
         }
-        return "User not found!";
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(Map.of("message", "User not found!"));
     }
 }
