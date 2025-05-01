@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { saveSession } from "../../utils/SessionManager"; // ✅ Import session manager
+import { saveSession } from "../../utils/SessionManager";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -20,10 +20,10 @@ const Register = () => {
       });
 
       if (response.data === "User registered successfully!") {
-        saveSession({ email }); // ✅ Save user session after registration
+        saveSession({ name, email }); // ✅ Save name and email in session
         navigate("/home");
       } else {
-        setError(response.data); // e.g., "Email already exists"
+        setError(response.data);
       }
     } catch (error) {
       console.error("Registration error:", error);
