@@ -9,10 +9,10 @@ public class User {
     private String id;
     private String name;
     private String email;
-    private String password; // New field
-    private String provider; // "manual" or "google"
+    private String password;
+    private String provider;
 
-    // Getters and Setters
+    // Getters & Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

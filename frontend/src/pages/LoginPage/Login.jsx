@@ -1,8 +1,9 @@
+// Login.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
 import { saveSession } from "../../utils/SessionManager";
+import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,21 +14,17 @@ const Login = () => {
   const handleManualLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:9006/auth/login", {
-        email,
-        password,
-      });
+      const response = await axios.post("http://localhost:9006/auth/login", { email, password });
 
       if (response.data.message === "Login successful!" && response.data.user) {
-        const { name, email } = response.data.user;
-        saveSession({ name, email }); // ✅ Save name and email
+        saveSession(response.data.user);
         navigate("/home");
       } else {
         setError("Invalid email or password");
       }
     } catch (err) {
       console.error("Login error:", err);
-      setError("An error occurred during login. Please try again.");
+      setError("Login failed. Please try again.");
     }
   };
 
@@ -38,44 +35,14 @@ const Login = () => {
   return (
     <div className="login-container">
       <h2 className="login-title">Login</h2>
-
       <form onSubmit={handleManualLogin} className="login-form">
-        <div className="input-group">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            required
-            className="input-field"
-          />
-        </div>
-        <div className="input-group">
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            required
-            className="input-field"
-          />
-        </div>
-        <div>
-          <button type="submit" className="submit-button">
-            Login
-          </button>
-        </div>
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+        <button type="submit" className="submit-button">Login</button>
       </form>
-
       {error && <p className="error-message">{error}</p>}
-
       <hr className="separator" />
-
-      <div>
-        <button onClick={handleGoogleLogin} className="google-login-button">
-          Login with Google
-        </button>
-      </div>
+      <button onClick={handleGoogleLogin} className="google-login-button">Login with Google</button>
     </div>
   );
 };
