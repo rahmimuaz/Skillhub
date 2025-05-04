@@ -1,11 +1,10 @@
-// Navbar.jsx
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { isLoggedIn, clearSession, getSession } from "../utils/SessionManager";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const session = getSession(); // ✅ Get logged-in user
+  const session = getSession();
 
   const handleLogout = () => {
     clearSession();
@@ -18,7 +17,7 @@ const Navbar = () => {
       <div style={styles.links}>
         {isLoggedIn() ? (
           <>
-            <span style={{ color: "white", marginRight: "10px" }}>
+            <span style={{ color: "white" }}>
               Welcome, {session?.name || session?.email}
             </span>
             <Link to="/home" style={styles.link}>Home</Link>
@@ -43,21 +42,10 @@ const styles = {
     alignItems: "center",
     padding: "10px 20px",
     backgroundColor: "#007bff",
-    color: "white",
   },
-  logo: {
-    fontWeight: "bold",
-  },
-  links: {
-    display: "flex",
-    gap: "15px",
-    alignItems: "center",
-  },
-  link: {
-    color: "white",
-    textDecoration: "none",
-    fontWeight: "bold",
-  },
+  logo: { fontWeight: "bold", color: "white" },
+  links: { display: "flex", gap: "15px", alignItems: "center" },
+  link: { color: "white", textDecoration: "none", fontWeight: "bold" },
   logoutButton: {
     backgroundColor: "#dc3545",
     color: "white",
@@ -65,7 +53,7 @@ const styles = {
     padding: "5px 10px",
     borderRadius: "5px",
     cursor: "pointer",
-  }
+  },
 };
 
-export default Navbar; // ✅ This line is required!
+export default Navbar;

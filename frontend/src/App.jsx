@@ -1,28 +1,23 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-// Pages
+import Navbar from "./components/Navbar";
 import Login from "./pages/LoginPage/Login";
 import Register from "./pages/LoginPage/Register";
 import Users from "./pages/LoginPage/Users";
 import Home from "./pages/HomePage/Home";
-import HomePage from "./pages/HomePage/Home"; // Consider removing if unused
-
-// Components
-import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
-    <GoogleOAuthProvider clientId="235074436580-fekrpapo667arbo0jkqa9nmprcpqul96.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID_HERE">
       <Router>
-        <Navbar /> {/* Global navigation */}
+        <Navbar />
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/users" element={<Users />} />
-          <Route path="/hh" element={<HomePage />} /> {/* Optional route */}
         </Routes>
       </Router>
     </GoogleOAuthProvider>
