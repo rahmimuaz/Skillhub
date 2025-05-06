@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { saveSession } from "../../utils/SessionManager";
+import "./Register.css"; 
 
 const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });

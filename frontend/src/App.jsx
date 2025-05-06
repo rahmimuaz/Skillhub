@@ -10,7 +10,7 @@ import Home from "./pages/HomePage/Home";
 
 const App = () => {
   return (
-    <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID_HERE">
+    <GoogleOAuthProvider clientId="235074436580-fekrpapo667arbo0jkqa9nmprcpqul96.apps.googleusercontent.com">
       <Router>
         <Navbar />
         <Routes>
