@@ -1,5 +1,5 @@
 import React from "react";
-import { isLoggedIn } from "../../utils/SessionManager";
+
 import "./Home.css";
 
 const Home = () => {
