@@ -16,7 +16,6 @@ public class LearningProgress {
     private String status;  // "In Progress" or "Completed"
     private LocalDateTime timestamp;
 
-
     // Constructors
     public LearningProgress() {}
 
