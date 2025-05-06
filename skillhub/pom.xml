@@ -12,10 +12,10 @@
     </parent>
     
     <groupId>com.skillhub</groupId>
-    <artifactId>learning-tracker</artifactId>
+    <artifactId>skillhub</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>learning-tracker</name>
-    <description>Learning Progress Tracker Backend</description>
+    <name>skillhub</name>
+    <description>Demo project for Spring Boot</description>
     
     <properties>
         <java.version>17</java.version>
