@@ -28,7 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .cors().and() // Enable CORS
-            .csrf().disable() // Disable CSRF if necessary
+            .csrf().disable() // Disable CSRF if necessary (consider re-enabling it if needed)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/register", "/auth/login", "/oauth2/**").permitAll() // Allow public endpoints
                 .anyRequest().authenticated()
@@ -36,6 +36,7 @@ public class SecurityConfig {
             .oauth2Login(oauth2 -> oauth2
                 .successHandler(successHandler)
                 .failureHandler((request, response, exception) -> {
+                    // Log the exception for debugging but handle gracefully in production
                     exception.printStackTrace();
                     response.sendRedirect("/login?error");
                 })
@@ -44,7 +45,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // CORS configuration allowing localhost:5173 (React frontend)
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();

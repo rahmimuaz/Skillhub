@@ -11,6 +11,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,17 +34,29 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 
         String email = (String) attributes.get("email");
         String name = (String) attributes.get("name");
+        String picture = (String) attributes.get("picture"); // may return null if not available
 
         Optional<User> existingUser = userRepository.findByEmail(email);
+        User user;
+
         if (existingUser.isEmpty()) {
-            User newUser = new User();
-            newUser.setEmail(email);
-            newUser.setName(name);
-            newUser.setProvider("google");
-            userRepository.save(newUser);
+            user = new User();
+            user.setEmail(email);
+            user.setName(name);
+            user.setProvider("google");
+            userRepository.save(user);
+        } else {
+            user = existingUser.get();
         }
 
-        // Redirect to home or dashboard
-        response.sendRedirect("http://localhost:5173/home");
+        // Redirect to frontend with user data
+        String redirectUrl = String.format(
+            "http://localhost:5173/oauth2-redirect?email=%s&name=%s&picture=%s",
+            URLEncoder.encode(user.getEmail(), StandardCharsets.UTF_8),
+            URLEncoder.encode(user.getName(), StandardCharsets.UTF_8),
+            URLEncoder.encode(picture != null ? picture : "", StandardCharsets.UTF_8)
+        );
+
+        response.sendRedirect(redirectUrl);
     }
 }
