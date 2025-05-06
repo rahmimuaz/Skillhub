@@ -5,11 +5,11 @@ import './Navbar.css';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const session = getSession();
+  const session = getSession();  // Fetch session data from localStorage
 
   const handleLogout = () => {
-    clearSession();
-    navigate("/");
+    clearSession();  // Clear the session data
+    navigate("/");    // Redirect to home page after logout
   };
 
   return (

@@ -1,6 +1,5 @@
-// SessionManager.js
-
 const SESSION_KEY = "skillhub_user_session";
+const SESSION_EXPIRY_TIME = 60 * 60 * 1000; // 1 hour in milliseconds
 
 /**
  * Save user session to localStorage.
@@ -8,7 +7,11 @@ const SESSION_KEY = "skillhub_user_session";
  */
 export const saveSession = (userData) => {
   if (userData && typeof userData === "object") {
-    localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
+    const sessionData = {
+      ...userData,
+      timestamp: Date.now(), // Add timestamp for session expiration check
+    };
+    localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
   } else {
     console.warn("Invalid session data. Must be an object.");
   }
@@ -36,10 +39,19 @@ export const clearSession = () => {
 };
 
 /**
- * Check whether a user session exists.
- * @returns {boolean}
+ * Check whether a user session exists and is not expired.
+ * @returns {boolean} - Whether the user is logged in.
  */
 export const isLoggedIn = () => {
   const session = getSession();
-  return session && session.email ? true : false;
+  if (session) {
+    // Check if the session is expired
+    const sessionAge = Date.now() - session.timestamp;
+    if (sessionAge > SESSION_EXPIRY_TIME) {
+      clearSession(); // Clear expired session
+      return false; // Session expired
+    }
+    return session.email ? true : false;
+  }
+  return false;
 };

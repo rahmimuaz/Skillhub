@@ -8,6 +8,7 @@ import Register from "./pages/LoginPage/Register";
 import Users from "./pages/LoginPage/Users";
 import Home from "./pages/HomePage/Home";
 
+import OAuth2Redirect from "./utils/OAuth2Redirect";
 const App = () => {
   return (
     <GoogleOAuthProvider clientId="235074436580-fekrpapo667arbo0jkqa9nmprcpqul96.apps.googleusercontent.com">
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/oauth2-redirect" element={<OAuth2Redirect />} />
         </Routes>
       </Router>
     </GoogleOAuthProvider>
