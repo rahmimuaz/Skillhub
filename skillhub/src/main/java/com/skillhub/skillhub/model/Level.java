@@ -2,14 +2,15 @@ package com.skillhub.skillhub.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
 
-@Document(collection = "tasks")
-public class Task {
+@Document(collection = "levels")
+public class Level {
     @Id
     private String id;
     private String name;
-    private String description;
     private boolean completed;
+    private List<Task> tasks;
 
     // Getters and Setters
     public String getId() {
@@ -28,19 +29,19 @@ public class Task {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public boolean isCompleted() {
         return completed;
     }
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 } 
