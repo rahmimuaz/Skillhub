@@ -1,0 +1,33 @@
+.home-layout {
+    display: flex;
+    height: calc(100vh - 60px); /* Adjust if there's a navbar */
+    background-color: #f5f7fa;
+    font-family: sans-serif;
+  }
+  
+  .left-sidebar, .right-sidebar {
+    width: 20%;
+    padding: 20px;
+    background-color: #e0e0e0;
+    box-shadow: inset -1px 0 0 #ccc;
+  }
+
+  
+  .left-sidebar h3,
+  .right-sidebar h3,
+  .main-content h2 {
+    margin-top: 0;
+  }
+  
+  .left-sidebar ul,
+  .right-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .left-sidebar li,
+  .right-sidebar li {
+    padding: 8px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
