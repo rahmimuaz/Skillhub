@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { PostProvider } from './context/PostContext';
 import CourseList from './components/CourseList';
 import CourseDetail from './components/CourseDetail';
 import MyCourses from './components/MyCourses';
@@ -15,6 +16,10 @@ import LearningPlanDetail from './pages/learningplan/LearningPlanDetail';
 import LearningPlanList from './pages/learningplan/LearningPlanList';
 import EditLearningPlanForm from './pages/learningplan/EditLearningPlanForm';
 
+import ViewPostPage from './pages/Post/ViewPostPage';
+import Feed from './pages/Post/Feed';
+import PostForm from './pages/Post/CreatePostPage';
+import CreatePostPage from './pages/Post/CreatePostPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 const Navigation = () => {
@@ -48,28 +53,39 @@ const Navigation = () => {
 };
 
 function App() {
+    const handlePostSuccess = (post) => {
+        console.log('Post submitted:', post);
+      };
     return (
         <GoogleOAuthProvider clientId="235074436580-fekrpapo667arbo0jkqa9nmprcpqul96.apps.googleusercontent.com">
             <Router>
                 <AuthProvider>
-                    <div className="app">
-                        <Navigation />
-                        <main className="main-content">
-                            <Routes>
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/" element={<Home />} />
-                                <Route path="/my-courses" element={<MyCourses />} />
-                                <Route path="/courses/:courseId" element={<CourseDetail />} />
-                                <Route path="/home" element={<Home />} />
-                                <Route path="/courses" element={<CourseList />} />
+                    <PostProvider>
+                        <div className="app">
+                            <Navigation />
+                            <main className="main-content">
+                                <Routes>
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/" element={<Home />} />
+                                    <Route path="/my-courses" element={<MyCourses />} />
+                                    <Route path="/courses/:courseId" element={<CourseDetail />} />
+                                    <Route path="/home" element={<Home />} />
+                                    <Route path="/courses" element={<CourseList />} />
+                                
+                                    <Route path="/plan/new" element={<LearningPlanForm />} />
+                                    <Route path="/plans" element={<LearningPlanList />} />
+                                    <Route path="/plan/edit/:id" element={<EditLearningPlanForm />} />
+                                    <Route path="/plan/:id" element={<LearningPlanDetail/>} />
+
+                                    <Route path="/posts" element={<ViewPostPage />} />
+                                    <Route path="/feed" element={<Feed />} />
+                                    <Route path="/create" element={<PostForm onSuccess={handlePostSuccess} />} />
                             
-                                <Route path="/plan/new" element={<LearningPlanForm />} />
-                                <Route path="/plans" element={<LearningPlanList />} />
-                                <Route path="/plan/edit/:id" element={<EditLearningPlanForm />} />
-                               <Route path="/plan/:id" element={<LearningPlanDetail/>} />
-                            </Routes>
-                        </main>
-                    </div>
+                                  
+                                </Routes>
+                            </main>
+                        </div>
+                    </PostProvider>
                 </AuthProvider>
             </Router>
         </GoogleOAuthProvider>

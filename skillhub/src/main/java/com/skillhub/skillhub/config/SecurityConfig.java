@@ -24,6 +24,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/courses/**").permitAll()
                 .requestMatchers("/api/plans/**").permitAll()
+                .requestMatchers("/api/posts/**").permitAll()
                 .requestMatchers("/favicon.ico").permitAll()
                 .requestMatchers("/error").permitAll()
                 .anyRequest().authenticated()

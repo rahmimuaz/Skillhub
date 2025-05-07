@@ -1,9 +1,10 @@
 package com.skillhub.skillhub.service;
 
-import com.skillhub.skillhub.model.Post;
-import com.skillhub.skillhub.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.skillhub.skillhub.model.Post;
+import com.skillhub.skillhub.repository.PostRepository;
 
 import java.util.List;
 import java.util.Optional;

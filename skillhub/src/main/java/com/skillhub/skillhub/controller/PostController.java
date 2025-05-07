@@ -1,18 +1,24 @@
 package com.skillhub.skillhub.controller;
 
-import com.skillhub.skillhub.model.Post;
-import com.skillhub.skillhub.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.skillhub.skillhub.model.Post;
+import com.skillhub.skillhub.service.PostService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/posts")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class PostController {
+
+    private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
     @Autowired
     private PostService service;
@@ -35,7 +41,15 @@ public class PostController {
 
     @PostMapping
     public Post createPost(@RequestBody Post post) {
-        return service.createPost(post);
+        logger.info("Received post creation request: {}", post);
+        try {
+            Post createdPost = service.createPost(post);
+            logger.info("Successfully created post: {}", createdPost);
+            return createdPost;
+        } catch (Exception e) {
+            logger.error("Error creating post: ", e);
+            throw e;
+        }
     }
 
     @PutMapping("/{id}")
