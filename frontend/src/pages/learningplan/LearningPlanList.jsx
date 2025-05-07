@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import { Card, Button, Row, Col, Badge, Alert, Spinner, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios from 'axios';
 import { FiPlus, FiTrash2, FiEye, FiShare2 } from 'react-icons/fi';
+import { useAuth } from '../../context/AuthContext';
 import './LearningPlanList.css';
 
 const API_URL = 'http://localhost:9006/api';
 
 const LearningPlanList = () => {
+  const { user } = useAuth();
   const [plans, setPlans] = useState([]);
   const [sharedPlans, setSharedPlans] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,18 +17,18 @@ const LearningPlanList = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [activeTab, setActiveTab] = useState('myPlans');
 
-  // Get user ID from storage or use default values
-  const getUserId = () => {
-    return localStorage.getItem('userId') || sessionStorage.getItem('userId') || 'user123';
-  };
-  const SHARED_USER_ID = "sharedUser123";
-
   useEffect(() => {
     const fetchPlans = async () => {
+      if (!user) return;
+      
       try {
         const [plansResponse, sharedPlansResponse] = await Promise.all([
-          axios.get(`${API_URL}/plans/user/${getUserId()}`),
-          axios.get(`${API_URL}/plans/shared/${SHARED_USER_ID}`)
+          axios.get(`${API_URL}/plans/user/${user.id}`, {
+            withCredentials: true
+          }),
+          axios.get(`${API_URL}/plans/shared/${user.id}`, {
+            withCredentials: true
+          })
         ]);
         setPlans(plansResponse.data);
         setSharedPlans(sharedPlansResponse.data);
@@ -38,13 +40,14 @@ const LearningPlanList = () => {
       }
     };
     fetchPlans();
-    // eslint-disable-next-line
-  }, []);
+  }, [user]);
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this learning plan?')) {
       try {
-        await axios.delete(`${API_URL}/plans/${id}`);
+        await axios.delete(`${API_URL}/plans/${id}`, {
+          withCredentials: true
+        });
         setPlans(plans.filter(plan => plan.id !== id));
       } catch (error) {
         setError('Failed to delete learning plan');

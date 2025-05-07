@@ -4,21 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import TopicForm from './TopicForm';
 import { FiPlus, FiSave, FiX } from 'react-icons/fi';
+import { useAuth } from '../../context/AuthContext';
 
 const API_URL = 'http://localhost:9006/api';
 
 const LearningPlanForm = ({ onCancel }) => {
   const navigate = useNavigate();
-
-  const getUserId = () => {
-    return localStorage.getItem('userId') || sessionStorage.getItem('userId') || 'user123';
-  };
+  const { user } = useAuth();
 
   const [plan, setPlan] = useState({
     title: '',
     description: '',
     topics: [],
-    userId: getUserId(),
+    userId: user?.id,
     sharedWith: []
   });
   const [error, setError] = useState('');
@@ -31,12 +29,17 @@ const LearningPlanForm = ({ onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      setError('You must be logged in to create a learning plan');
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       await axios.post(`${API_URL}/plans`, plan, {
+        withCredentials: true,
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
+          'Content-Type': 'application/json'
         }
       });
       navigate('/', { state: { successMessage: 'Learning plan created successfully!' } });
