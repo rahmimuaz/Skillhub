@@ -30,4 +30,15 @@
     padding: 8px 0;
     border-bottom: 1px solid #ccc;
   }
+  .course-link {
+    display: block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .course-link:hover {
+    text-decoration: underline;
+  }
+  
   

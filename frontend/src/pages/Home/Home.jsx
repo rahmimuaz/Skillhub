@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"; // import Link
 
 import "./Home.css";
 
@@ -25,6 +26,9 @@ const Home = () => {
           <li>No new alerts</li>
           <li>Check new updates</li>
         </ul>
+        <Link to="/courses" className="course-link">Go to Courses</Link>
+        <Link to="/plans" className="course-link">Planning and Sharing</Link>
+        <Link to="/plan/new" className="course-link">Planning and Sharing</Link>
       </div>
     </div>
   );

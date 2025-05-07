@@ -9,6 +9,14 @@ import './App.css';
 import Home from './pages/Home/Home';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
+import { Container, Navbar, Nav, Button, Row, Col } from 'react-bootstrap';
+import LearningPlanForm from './pages/learningplan/LearningPlanForm';
+import LearningPlanDetail from './pages/learningplan/LearningPlanDetail';
+import LearningPlanList from './pages/learningplan/LearningPlanList';
+import EditLearningPlanForm from './pages/learningplan/EditLearningPlanForm';
+
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 const Navigation = () => {
     const { isAuthenticated, user, logout } = useAuth();
 
@@ -54,6 +62,11 @@ function App() {
                                 <Route path="/courses/:courseId" element={<CourseDetail />} />
                                 <Route path="/home" element={<Home />} />
                                 <Route path="/courses" element={<CourseList />} />
+                            
+                                <Route path="/plan/new" element={<LearningPlanForm />} />
+                                <Route path="/plans" element={<LearningPlanList />} />
+                                <Route path="/plan/edit/:id" element={<EditLearningPlanForm />} />
+                               <Route path="/plan/:id" element={<LearningPlanDetail/>} />
                             </Routes>
                         </main>
                     </div>
