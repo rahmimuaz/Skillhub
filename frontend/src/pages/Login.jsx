@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 import '../styles/Login.css';
 
 const Login = () => {
@@ -11,6 +12,7 @@ const Login = () => {
     const [name, setName] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +27,7 @@ const Login = () => {
             });
 
             if (response.data.success) {
-                navigate('/');
+                login(response.data.user);
             } else {
                 setError(response.data.message);
             }
@@ -46,7 +48,7 @@ const Login = () => {
             });
 
             if (response.data.success) {
-                navigate('/');
+                login(response.data.user);
             } else {
                 setError(response.data.message);
             }
