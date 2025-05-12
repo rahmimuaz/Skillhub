@@ -26,41 +26,43 @@ function Dashboard() {
         Organize, track, and achieve your learning goals effectively.
       </p>
       
-      <Row className="g-3 justify-content-center" style={{ marginTop: '2rem' }}>
-        <Col xs="auto">
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => navigate('/plans')}
-            style={{
-              minWidth: '240px',
-              padding: '1.2rem 2.2rem',
-              borderRadius: '50px',
-              fontSize: '1.3rem',
-              fontWeight: '500',
-            }}
-          >
-            View My Plans
-          </Button>
-        </Col>
+     <Row className="g-3 justify-content-center" style={{ marginTop: '2rem' }}>
+  <Col xs="auto">
+    <Button
+      variant="primary"
+      size="lg"
+      onClick={() => navigate('/plans')}
+      style={{
+        minWidth: '240px',
+        padding: '1.2rem 2.2rem',
+        borderRadius: '50px',
+        fontSize: '1.3rem',
+        fontWeight: '500',
+        margin: '0 2rem', // Increased horizontal spacing
+      }}
+    >
+      View My Plans
+    </Button>
+  </Col>
 
-        <Col xs="auto">
-          <Button
-            variant="success"
-            size="lg"
-            onClick={() => navigate('/plan/new')}
-            style={{
-              minWidth: '240px',
-              padding: '1.2rem 2.2rem',
-              borderRadius: '50px',
-              fontSize: '1.3rem',
-              fontWeight: '500',
-            }}
-          >
-            Create New Plan
-          </Button>
-        </Col>
-      </Row>
+  <Col xs="auto">
+    <Button
+      variant="success"
+      size="lg"
+      onClick={() => navigate('/plan/new')}
+      style={{
+        minWidth: '240px',
+        padding: '1.2rem 2.1rem',
+        borderRadius: '50px',
+        fontSize: '1.3rem',
+        fontWeight: '500',
+        margin: '0 2rem', // Increased horizontal spacing
+      }}
+    >
+      Create New Plan
+    </Button>
+  </Col>
+</Row>
     </Container>
   );
 }
