@@ -12,54 +12,54 @@ import './App.css'; // Optional: For custom styles like background or footer fix
 function Dashboard() {
   const navigate = useNavigate();
   return (
-   <Container
-  className="d-flex flex-column align-items-center justify-content-center text-center"
-  style={{ minHeight: '70vh', paddingTop: '5rem', paddingBottom: '5rem', color: 'white' }}
->
-  <h1 style={{ fontSize: '3.5rem' }} className="mb-3">
-    Welcome to Your Learning Planner
-  </h1>
-  <p
-    className="lead mb-5"
-    style={{ maxWidth: '700px', color: 'white', fontSize: '1.8rem', fontWeight: '500' }}
-  >
-    Organize, track, and achieve your learning goals effectively.
-  </p>
-      <Row className="g-3 justify-content-center">
+    <Container
+      className="d-flex flex-column align-items-center justify-content-center text-center"
+      style={{ minHeight: '70vh', paddingTop: '5rem', paddingBottom: '5rem', color: 'white' }}
+    >
+      <h1 style={{ fontSize: '3.5rem', marginTop: '-4rem' }} className="mb-3">
+  Welcome to Your Learning Planner
+</h1>
+      <p
+        className="lead mb-5"
+        style={{ maxWidth: '700px', color: 'white', fontSize: '1.8rem', fontWeight: '500' }}
+      >
+        Organize, track, and achieve your learning goals effectively.
+      </p>
+      
+      <Row className="g-3 justify-content-center" style={{ marginTop: '2rem' }}>
         <Col xs="auto">
-  <Button
-    variant="primary"
-    size="lg"
-    onClick={() => navigate('/plans')}
-    style={{
-      minWidth: '220px',
-      padding: '1rem 2rem',
-      borderRadius: '50px',
-      fontSize: '1.2rem',
-      fontWeight: '500',
-    }}
-  >
-    View My Plans
-  </Button>
-</Col>
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={() => navigate('/plans')}
+            style={{
+              minWidth: '240px',
+              padding: '1.2rem 2.2rem',
+              borderRadius: '50px',
+              fontSize: '1.3rem',
+              fontWeight: '500',
+            }}
+          >
+            View My Plans
+          </Button>
+        </Col>
 
-<Col xs="auto">
-  <Button
-    variant="success"
-    size="lg"
-    onClick={() => navigate('/plan/new')}
-    style={{
-      minWidth: '220px',
-      padding: '1rem 2rem',
-      borderRadius: '50px',
-      fontSize: '1.2rem',
-      fontWeight: '500',
-    }}
-  >
-    Create New Plan
-  </Button>
-</Col>
-
+        <Col xs="auto">
+          <Button
+            variant="success"
+            size="lg"
+            onClick={() => navigate('/plan/new')}
+            style={{
+              minWidth: '240px',
+              padding: '1.2rem 2.2rem',
+              borderRadius: '50px',
+              fontSize: '1.3rem',
+              fontWeight: '500',
+            }}
+          >
+            Create New Plan
+          </Button>
+        </Col>
       </Row>
     </Container>
   );
