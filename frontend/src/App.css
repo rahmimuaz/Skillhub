@@ -1,23 +1,30 @@
-/* Make sure the body and html elements cover the entire viewport */
 html, body {
   height: 100%;
   margin: 0;
+  padding: 0;
+
+  /* Background image styles */
+  background-image: url('./assets/lp_back.jpg');
+  background-size: cover;         /* Stretches the image to cover the whole screen */
+  background-position: center;    /* Centers the image */
+  background-repeat: no-repeat;   /* Ensures it does NOT repeat */
+  background-attachment: fixed;   /* Optional: keeps background fixed during scroll */
 }
 
 /* Apply styles to the root element */
 #root {
-  height: 100%;
-  width: 100%;
+  min-height: 100vh;
+  text-align: center;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0; /* Remove padding to ensure no spacing */
   text-align: center;
 
   /* Add background image styles */
-  background-image: url('./assets/lp_back.jpg');
-  background-size: cover;
+  /* background-image: url('./assets/lp_back.jpg'); */
+  /* background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
 
   /* Ensure it covers the entire viewport */
   min-height: 100vh;
