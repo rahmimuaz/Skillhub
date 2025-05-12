@@ -1,19 +1,40 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Make sure the body and html elements cover the entire viewport */
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
+/* Apply styles to the root element */
+#root {
+  height: 100%;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0; /* Remove padding to ensure no spacing */
+  text-align: center;
+
+  /* Add background image styles */
+  background-image: url('./assets/lp_back.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Ensure it covers the entire viewport */
+  min-height: 100vh;
+}
+
+/* Optional styles for the logo */
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
