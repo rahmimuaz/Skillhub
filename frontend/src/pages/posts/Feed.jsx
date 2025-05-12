@@ -2,6 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { postService } from '../services/postService';
 import '../styles/Feed.css';
 
+const Feed = () => {
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const data = await postService.getAllPosts();
+                setPosts(data);
+                setLoading(false);
+            } catch (err) {
+                setError('Failed to load posts');
+                setLoading(false);
+            }
+        };
+
+        fetchPosts();
+    }, []);
 
     if (loading) return <div className="loading">Loading posts...</div>;
     if (error) return <div className="error">{error}</div>;
