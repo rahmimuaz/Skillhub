@@ -39,7 +39,7 @@ html, body {
 }
 
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #ff64c6aa);
 }
 
 .logo.react:hover {
