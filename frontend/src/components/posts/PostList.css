@@ -1,9 +1,9 @@
 /* Simplified User-Friendly Styles */
 .post-list {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 2rem;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px  !important;
+    padding: 2rem !important;
     margin: 2rem auto;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
@@ -24,7 +24,7 @@
   }
   
   .refresh-button {
-    background: #2563eb;
+    background: #2563eb !important;
     color: white;
     padding: 0.75rem 1.5rem;
     border: none;
@@ -37,7 +37,7 @@
   }
   
   .refresh-button:hover {
-    background: #1d4ed8;
+    background: #1d4ed8 !important;
   }
   
   .post-table {
@@ -90,12 +90,12 @@
   }
   
   .edit-button {
-    color: #2563eb;
+    color: #2563eb !important;
     transition: color 0.2s ease;
   }
   
   .edit-button:hover {
-    color: #1d4ed8;
+    color: #1d4ed8 !important;
   }
   
   .delete-button {
