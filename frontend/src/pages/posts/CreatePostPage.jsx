@@ -7,7 +7,7 @@ const CreatePostPage = () => {
 
   return (
     <div>
-      <h2></h2>
+      <h2>Create new posts</h2>
       <PostForm onSuccess={handleSuccess} />
     </div>
   );
