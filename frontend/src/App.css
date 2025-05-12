@@ -4,7 +4,7 @@ html, body {
   padding: 0;
 
   /* Background image styles */
-  background-image: url('./assets/lp_back.jpg');
+  background-image: url('./assets/lp_back.webp');
   background-size: cover;         /* Stretches the image to cover the whole screen */
   background-position: center;    /* Centers the image */
   background-repeat: no-repeat;   /* Ensures it does NOT repeat */
@@ -15,7 +15,7 @@ html, body {
 #root {
   min-height: 100vh;
   text-align: center;
-  max-width: 1280px;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 0; /* Remove padding to ensure no spacing */
   text-align: center;

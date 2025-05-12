@@ -14,7 +14,8 @@ function Dashboard() {
   return (
     <Container className="d-flex flex-column align-items-center justify-content-center text-center" style={{ minHeight: '70vh', paddingTop: '5rem', paddingBottom: '5rem',color:'white'}}>
       <h1 className="display-4 mb-3">Welcome to Your Learning Planner</h1>
-      <p className="lead text-muted mb-5" style={{ maxWidth: '600px',color:'white', fontSize: '1.2rem' }}>
+     <p className="lead text-unmuted mb-5" style={{ maxWidth: '700px', color: 'white', fontSize: '1.4rem' }}>
+
         Organize, track, and achieve your learning goals effectively.
       </p>
       <Row className="g-3 justify-content-center">
