@@ -15,14 +15,18 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 @Configuration
-@EnableWebSecurity
-public class SecurityConfig {
+@EnableWebSecurity // Enables Spring Security web security support
+public class SecurityConfig { 
 
+    // Custom success handler for OAuth2 login
     private final CustomOAuth2SuccessHandler successHandler;
 
+     // Constructor injection of the custom success handler
     public SecurityConfig(CustomOAuth2SuccessHandler successHandler) {
         this.successHandler = successHandler;
     }
+
+    // Security filter chain bean that defines security rules
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,7 +47,7 @@ public class SecurityConfig {
 
         return http.build();
     }
-
+     // CORS configuration to allow frontend requests from http://localhost:5173 (React)
     // CORS configuration allowing localhost:5173 (React frontend)
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
