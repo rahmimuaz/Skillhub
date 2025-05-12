@@ -11,15 +11,19 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/posts")
+@RestController  // Marks this class as a REST controller, making it capable of handling HTTP requests.
+@RequestMapping("/api/posts")// Sets the base URL path for all endpoints in this controller.
 public class PostController {
-
+   
+     // Logger for logging information and errors
     private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
-    @Autowired
+    @Autowired // Automatically injects the PostService dependency
     private PostService service;
+    
 
+    // GET /api/posts
+    // Returns a list of all posts
     @GetMapping
     public List<Post> getAllPosts() {
         return service.getAllPosts();
@@ -30,11 +34,16 @@ public class PostController {
         Optional<Post> post = service.getPostById(id);
         return post.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+    // GET /api/posts/user/{userId}
+    // Returns all posts created by a specific user
 
     @GetMapping("/user/{userId}")
     public List<Post> getPostsByUserId(@PathVariable String userId) {
         return service.getPostsByUserId(userId);
     }
+
+    // POST /api/posts
+    // Creates a new post
 
     @PostMapping
     public Post createPost(@RequestBody Post post) {
@@ -54,7 +63,7 @@ public class PostController {
         Post post = service.updatePost(id, updatedPost);
         return post != null ? ResponseEntity.ok(post) : ResponseEntity.notFound().build();
     }
-
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable String id) {
         service.deletePost(id);
