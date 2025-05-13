@@ -3,6 +3,7 @@ package com.skillhub.skillhub.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 
 @Document(collection = "posts")
@@ -57,4 +58,9 @@ public class Post {
 
     public LocalDateTime getTimestamp() { return timestamp; }
     public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
+
+    public Set<String> getLikedUserIds() {
+    
+        throw new UnsupportedOperationException("Unimplemented method 'getLikedUserIds'");
+    }
 }
