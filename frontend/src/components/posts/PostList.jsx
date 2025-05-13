@@ -1,45 +1,49 @@
 import { useEffect, useState } from 'react';
 import {
   Pencil, Trash2, RefreshCw, Video, Calendar, User, Eye
-} from 'lucide-react';
-import { getPosts, deletePost } from '../services/api';
-import toast from 'react-hot-toast';
-import './PostList.css';
+} from 'lucide-react'; // Importing icons from lucide-react
+import { getPosts, deletePost } from '../services/api'; // API service functions
+import toast from 'react-hot-toast'; // For showing toast notifications
+import './PostList.css'; // Importing CSS styles
 
 const PostList = ({ onEdit }) => {
-  // Keep all existing state and logic unchanged
+  // State to hold fetched posts
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
 
+  // Fetch posts from API
   const fetchPosts = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await getPosts();
-      setPosts(response.data);
+      const response = await getPosts(); // API call
+      setPosts(response.data); // Store fetched posts in state
     } catch (error) {
       setError('Failed to fetch posts. Please try again.');
       toast.error('Failed to fetch posts');
     } finally {
-      setLoading(false);
+      setLoading(false); // Stop loading state
     }
   };
 
+  // Handle post deletion
   const handleDelete = async (id) => {
     try {
-      await deletePost(id);
-      setPosts(posts.filter(post => post.id !== id));
+      await deletePost(id); // API call to delete post
+      setPosts(posts.filter(post => post.id !== id)); // Remove post from UI
       toast.success('Post deleted successfully');
     } catch (error) {
       toast.error('Failed to delete post');
     }
   };
 
+  // Fetch posts on component mount
   useEffect(() => {
     fetchPosts();
   }, []);
 
+  // Format date for displaying post creation time
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -51,6 +55,7 @@ const PostList = ({ onEdit }) => {
     });
   };
 
+  // Show loading spinner while fetching posts
   if (loading) {
     return (
       <div className="loading-container">
@@ -60,6 +65,7 @@ const PostList = ({ onEdit }) => {
     );
   }
 
+  // Show error message and retry button if fetch failed
   if (error) {
     return (
       <div className="error-container">
@@ -76,6 +82,7 @@ const PostList = ({ onEdit }) => {
 
   return (
     <div className="post-list">
+      {/* Header section with title and refresh button */}
       <div className="post-header">
         <h2 className="post-title">All Posts</h2>
         <button
@@ -87,20 +94,17 @@ const PostList = ({ onEdit }) => {
         </button>
       </div>
 
+      {/* Show empty state message if no posts are available */}
       {posts.length === 0 ? (
         <div className="empty-state">No posts found. Create your first post!</div>
       ) : (
+        // Render table of posts
         <div className="table-container">
           <table className="post-table">
             <thead className="table-header">
               <tr>
                 {['Title', 'Description', 'Media', 'Author', 'Date', 'Views', 'Category', 'Actions'].map((col) => (
-                  <th
-                    key={col}
-                    className="table-head"
-                  >
-                    {col}
-                  </th>
+                  <th key={col} className="table-head">{col}</th>
                 ))}
               </tr>
             </thead>
@@ -109,6 +113,8 @@ const PostList = ({ onEdit }) => {
                 <tr key={post.id} className="table-row">
                   <td className="table-data font-medium">{post.title}</td>
                   <td className="table-data text-gray-600">{post.description}</td>
+
+                  {/* Media column: show images and video count */}
                   <td className="table-data">
                     <div className="media-grid">
                       {post.images?.slice(0, 2).map((image, idx) => (
@@ -127,27 +133,37 @@ const PostList = ({ onEdit }) => {
                       )}
                     </div>
                   </td>
+
+                  {/* Author/user info */}
                   <td className="table-data">
                     <div className="flex items-center gap-2">
                       <User size={16} />
                       <span>User {post.userId}</span>
                     </div>
                   </td>
+
+                  {/* Timestamp */}
                   <td className="table-data">
                     <div className="flex items-center gap-2">
                       <Calendar size={16} />
                       {formatDate(post.timestamp)}
                     </div>
                   </td>
+
+                  {/* Views count */}
                   <td className="table-data">
                     <div className="flex items-center gap-2">
                       <Eye size={16} />
                       {post.visibilityCount}
                     </div>
                   </td>
+
+                  {/* Post type/category */}
                   <td className="table-data">
                     <span className="post-badge">{post.postType}</span>
                   </td>
+
+                  {/* Action buttons: edit & delete */}
                   <td className="table-data">
                     <div className="action-buttons">
                       <button 
