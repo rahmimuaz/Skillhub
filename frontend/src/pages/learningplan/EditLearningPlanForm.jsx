@@ -1,19 +1,24 @@
 // src/components/EditLearningPlanForm.js
-import React, { useState, useEffect } from 'react';
-import { Form, Button, Container, Card, Alert } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from 'react';
+import { Form, Button, Container, Card, Alert, Spinner } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import TopicForm from './TopicForm';
+import { FaPlus, FaSave, FaTimes, FaArrowUp } from 'react-icons/fa';
+import './EditLearningPlanForm.css';
 
 const API_URL = 'http://localhost:9006/api';
 
 const EditLearningPlanForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const containerRef = useRef(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const fetchPlan = async () => {
@@ -35,6 +40,36 @@ const EditLearningPlanForm = () => {
     fetchPlan();
   }, [id]);
 
+  // Handle scroll events
+  useEffect(() => {
+    const handleScroll = () => {
+      if (containerRef.current) {
+        const { scrollTop } = containerRef.current;
+        setShowScrollTop(scrollTop > 300);
+      }
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPlan(prev => ({ ...prev, [name]: value }));
@@ -42,6 +77,7 @@ const EditLearningPlanForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSaving(true);
     try {
       await axios.put(`${API_URL}/plans/${plan.id}`, plan, {
         headers: {
@@ -53,6 +89,8 @@ const EditLearningPlanForm = () => {
     } catch (err) {
       setError('Failed to update learning plan');
       console.error(err);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -69,6 +107,16 @@ const EditLearningPlanForm = () => {
         resources: []
       }]
     }));
+
+    // Scroll to the bottom after adding a new topic
+    setTimeout(() => {
+      if (containerRef.current) {
+        containerRef.current.scrollTo({
+          top: containerRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
   };
 
   const handleTopicChange = (updatedTopic, index) => {
@@ -88,68 +136,140 @@ const EditLearningPlanForm = () => {
   };
 
   if (loading) {
-    return <div className="text-center mt-5">Loading...</div>;
+    return (
+      <div className="loading-container">
+        <Spinner animation="border" role="status" variant="primary">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
   }
 
   if (error) {
-    return <Alert variant="danger">{error}</Alert>;
+    return (
+      <Container className="mt-4">
+        <Alert variant="danger" className="error-alert">
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{error}</p>
+          <Button variant="outline-danger" onClick={() => navigate('/')}>
+            Return to Home
+          </Button>
+        </Alert>
+      </Container>
+    );
   }
 
   if (!plan) {
-    return <Alert variant="warning">Learning plan not found</Alert>;
+    return (
+      <Container className="mt-4">
+        <Alert variant="warning" className="warning-alert">
+          <Alert.Heading>Not Found</Alert.Heading>
+          <p>Learning plan not found</p>
+          <Button variant="outline-warning" onClick={() => navigate('/')}>
+            Return to Home
+          </Button>
+        </Alert>
+      </Container>
+    );
   }
 
   return (
-    <Container className="mt-4">
-      <h2>Edit Learning Plan</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Title</Form.Label>
-          <Form.Control
-            type="text"
-            name="title"
-            value={plan.title}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            name="description"
-            value={plan.description}
-            onChange={handleChange}
-            rows={3}
-          />
-        </Form.Group>
-        
-        <h3 className="mt-4">Topics</h3>
-        {plan.topics.map((topic, index) => (
-          <Card key={topic.id} className="mb-3">
-            <Card.Body>
-              <TopicForm
-                topic={topic}
-                onChange={(updatedTopic) => handleTopicChange(updatedTopic, index)}
-                onRemove={() => handleRemoveTopic(index)}
+    <Container className="edit-plan-container" ref={containerRef}>
+      <Card className="edit-plan-card">
+        <Card.Header className="edit-plan-header">
+          <h2>Edit Learning Plan</h2>
+        </Card.Header>
+        <Card.Body>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-4">
+              <Form.Label className="form-label">Title</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                value={plan.title}
+                onChange={handleChange}
+                required
+                className="form-control-lg"
+                placeholder="Enter plan title"
               />
-            </Card.Body>
-          </Card>
-        ))}
-        <Button variant="secondary" onClick={handleAddTopic} className="mb-3">
-          Add Topic
-        </Button>
-        
-        <div className="d-flex justify-content-between">
-          <Button variant="primary" type="submit">
-            Update Plan
-          </Button>
-          <Button variant="outline-secondary" onClick={() => navigate('/')}>
-            Cancel
-          </Button>
-        </div>
-      </Form>
+            </Form.Group>
+            
+            <Form.Group className="mb-4">
+              <Form.Label className="form-label">Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="description"
+                value={plan.description}
+                onChange={handleChange}
+                rows={4}
+                className="form-control-lg"
+                placeholder="Enter plan description"
+              />
+            </Form.Group>
+            
+            <div className="topics-section">
+              <div className="topics-header">
+                <h3>Topics</h3>
+                <Button 
+                  variant="success" 
+                  onClick={handleAddTopic} 
+                  className="add-topic-btn"
+                >
+                  <FaPlus className="me-2" /> Add Topic
+                </Button>
+              </div>
+              
+              {plan.topics.map((topic, index) => (
+                <Card key={topic.id} className="topic-card mb-3">
+                  <Card.Body>
+                    <TopicForm
+                      topic={topic}
+                      onChange={(updatedTopic) => handleTopicChange(updatedTopic, index)}
+                      onRemove={() => handleRemoveTopic(index)}
+                    />
+                  </Card.Body>
+                </Card>
+              ))}
+            </div>
+            
+            <div className="form-actions">
+              <Button 
+                variant="primary" 
+                type="submit" 
+                className="save-btn"
+                disabled={saving}
+              >
+                {saving ? (
+                  <>
+                    <Spinner as="span" animation="border" size="sm" className="me-2" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <FaSave className="me-2" /> Save Changes
+                  </>
+                )}
+              </Button>
+              <Button 
+                variant="outline-secondary" 
+                onClick={() => navigate('/')}
+                className="cancel-btn"
+              >
+                <FaTimes className="me-2" /> Cancel
+              </Button>
+            </div>
+          </Form>
+        </Card.Body>
+      </Card>
+      
+      <button 
+        className={`scroll-to-top ${showScrollTop ? 'visible' : ''}`}
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+      >
+        <FaArrowUp />
+      </button>
     </Container>
   );
 };
