@@ -87,6 +87,11 @@ const TopicForm = ({ topic, onChange, onRemove }) => {
           checked={topic.completed}
           onChange={handleChange}
         />
+        <div className="d-flex justify-content-end">
+        <Button variant="outline-danger" size="sm" onClick={onRemove}>
+          Remove Topic
+        </Button>
+      </div>
       </Form.Group>
 
       <h5 className="mt-3">Resources</h5>
@@ -98,15 +103,12 @@ const TopicForm = ({ topic, onChange, onRemove }) => {
           onRemove={() => handleRemoveResource(index)}
         />
       ))}
+       
       <Button variant="outline-primary" size="sm" onClick={handleAddResource} className="mb-3">
         Add Resource
       </Button>
 
-      <div className="d-flex justify-content-end">
-        <Button variant="outline-danger" size="sm" onClick={onRemove}>
-          Remove Topic
-        </Button>
-      </div>
+     
     </div>
   );
 };
