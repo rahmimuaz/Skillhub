@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:8006/api/posts';
@@ -28,6 +29,12 @@ export const deletePost = (id) => api.delete(`/${id}`);
 export const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append('image', file);
+
+    const response = await api.post('/upload-image', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
 
     
     return response.data;
