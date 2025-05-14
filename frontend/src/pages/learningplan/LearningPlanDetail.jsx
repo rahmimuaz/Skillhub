@@ -35,7 +35,7 @@ const LearningPlanDetail = () => {
             'Access-Control-Allow-Origin': '*'
           }
         });
-        
+
         if (response && response.data) {
           setPlan(response.data);
         } else {
@@ -132,12 +132,6 @@ const LearningPlanDetail = () => {
       {/* Plan Title in White */}
       <h2 style={{ color: 'white' }}>{plan.title || 'Untitled Plan'}</h2>
       <p>{plan.description || 'No description available'}</p>
-      
-      <div className="mb-3">
-        <Button variant="primary" onClick={handleEdit} className="me-2">Edit</Button>
-        <Button variant="danger" onClick={handleDelete} className="me-2">Delete</Button>
-        <Button variant="info" onClick={handleShare}>Share</Button>
-      </div>
 
       {plan.sharedWith && plan.sharedWith.length > 0 && (
         <Alert variant="info" className="mb-3">
@@ -161,15 +155,15 @@ const LearningPlanDetail = () => {
               <Badge bg={topic.completed ? 'success' : 'warning'}>
                 {topic.completed ? 'Completed' : 'In Progress'}
               </Badge>
-              
+
               <h5 className="mt-3">Resources</h5>
               {Array.isArray(topic.resources) && topic.resources.length > 0 ? (
                 <ListGroup>
                   {topic.resources.map((resource) => (
                     <ListGroup.Item key={resource.id || `resource-${Math.random()}`}>
-                      <a 
-                        href={resource.url} 
-                        target="_blank" 
+                      <a
+                        href={resource.url}
+                        target="_blank"
                         rel="noopener noreferrer"
                       >
                         {resource.name || 'Unnamed Resource'}
@@ -189,6 +183,19 @@ const LearningPlanDetail = () => {
       ) : (
         <Alert variant="info">No topics added to this plan yet</Alert>
       )}
+
+      {/* Buttons at Bottom */}
+      <div style={{ textAlign: 'center', marginTop: '30px' }}>
+        <Button variant="primary" onClick={handleEdit} className="me-2">
+          Edit
+        </Button>
+        <Button variant="danger" onClick={handleDelete} className="me-2">
+          Delete
+        </Button>
+        <Button variant="info" onClick={handleShare}>
+          Share
+        </Button>
+      </div>
 
       <SharePlanModal
         show={showShareModal}
