@@ -129,79 +129,90 @@ const LearningPlanDetail = () => {
 
   return (
     <Container className="mt-4">
-      {/* Plan Title in White */}
-      <h2 style={{ color: 'white' }}>{plan.title || 'Untitled Plan'}</h2>
-      <p>{plan.description || 'No description available'}</p>
+      <div
+        style={{
+          background: 'rgba(255, 255, 255, 0.1)',
+          padding: '30px',
+          borderRadius: '20px',
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+          WebkitBackdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.18)',
+          color: 'white'
+        }}
+      >
+        <h2 style={{ color: 'white' }}>{plan.title || 'Untitled Plan'}</h2>
+        <p>{plan.description || 'No description available'}</p>
 
-      {plan.sharedWith && plan.sharedWith.length > 0 && (
-        <Alert variant="info" className="mb-3">
-          This plan is shared with {plan.sharedWith.length} user(s)
-        </Alert>
-      )}
+        {plan.sharedWith && plan.sharedWith.length > 0 && (
+          <Alert variant="info" className="mb-3">
+            This plan is shared with {plan.sharedWith.length} user(s)
+          </Alert>
+        )}
 
-      {/* Topics Title in White */}
-      <h3 style={{ color: 'white' }}>Topics</h3>
-      {Array.isArray(plan.topics) && plan.topics.length > 0 ? (
-        plan.topics.map((topic) => (
-          <Card key={topic.id || `topic-${Math.random()}`} className="mb-3">
-            <Card.Body>
-              <Card.Title>{topic.name || 'Untitled Topic'}</Card.Title>
-              <Card.Text>{topic.description || 'No description available'}</Card.Text>
-              <div className="mb-2">
-                <small>
-                  Start: {topic.startDate || 'Not set'} | End: {topic.endDate || 'Not set'}
-                </small>
-              </div>
-              <Badge bg={topic.completed ? 'success' : 'warning'}>
-                {topic.completed ? 'Completed' : 'In Progress'}
-              </Badge>
+        <h3 style={{ color: 'white' }}>Topics</h3>
+        {Array.isArray(plan.topics) && plan.topics.length > 0 ? (
+          plan.topics.map((topic) => (
+            <Card key={topic.id || `topic-${Math.random()}`} className="mb-3">
+              <Card.Body>
+                <Card.Title>{topic.name || 'Untitled Topic'}</Card.Title>
+                <Card.Text>{topic.description || 'No description available'}</Card.Text>
+                <div className="mb-2">
+                  <small>
+                    Start: {topic.startDate || 'Not set'} | End: {topic.endDate || 'Not set'}
+                  </small>
+                </div>
+                <Badge bg={topic.completed ? 'success' : 'warning'}>
+                  {topic.completed ? 'Completed' : 'In Progress'}
+                </Badge>
 
-              <h5 className="mt-3">Resources</h5>
-              {Array.isArray(topic.resources) && topic.resources.length > 0 ? (
-                <ListGroup>
-                  {topic.resources.map((resource) => (
-                    <ListGroup.Item key={resource.id || `resource-${Math.random()}`}>
-                      <a
-                        href={resource.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {resource.name || 'Unnamed Resource'}
-                      </a>
-                      <Badge bg="secondary" className="ms-2">
-                        {resource.type || 'Unknown'}
-                      </Badge>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              ) : (
-                <p>No resources added yet</p>
-              )}
-            </Card.Body>
-          </Card>
-        ))
-      ) : (
-        <Alert variant="info">No topics added to this plan yet</Alert>
-      )}
+                <h5 className="mt-3">Resources</h5>
+                {Array.isArray(topic.resources) && topic.resources.length > 0 ? (
+                  <ListGroup>
+                    {topic.resources.map((resource) => (
+                      <ListGroup.Item key={resource.id || `resource-${Math.random()}`}>
+                        <a
+                          href={resource.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {resource.name || 'Unnamed Resource'}
+                        </a>
+                        <Badge bg="secondary" className="ms-2">
+                          {resource.type || 'Unknown'}
+                        </Badge>
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
+                ) : (
+                  <p>No resources added yet</p>
+                )}
+              </Card.Body>
+            </Card>
+          ))
+        ) : (
+          <Alert variant="info">No topics added to this plan yet</Alert>
+        )}
 
-      {/* Buttons at Bottom */}
-      <div style={{ textAlign: 'center', marginTop: '30px' }}>
-        <Button variant="primary" onClick={handleEdit} className="me-2">
-          Edit
-        </Button>
-        <Button variant="danger" onClick={handleDelete} className="me-2">
-          Delete
-        </Button>
-        <Button variant="info" onClick={handleShare}>
-          Share
-        </Button>
+        {/* Buttons at Bottom */}
+        <div style={{ textAlign: 'center', marginTop: '30px' }}>
+          <Button variant="primary" onClick={handleEdit} className="me-2">
+            Edit
+          </Button>
+          <Button variant="danger" onClick={handleDelete} className="me-2">
+            Delete
+          </Button>
+          <Button variant="info" onClick={handleShare}>
+            Share
+          </Button>
+        </div>
+
+        <SharePlanModal
+          show={showShareModal}
+          onHide={() => setShowShareModal(false)}
+          onSubmit={handleShareSubmit}
+        />
       </div>
-
-      <SharePlanModal
-        show={showShareModal}
-        onHide={() => setShowShareModal(false)}
-        onSubmit={handleShareSubmit}
-      />
     </Container>
   );
 };
