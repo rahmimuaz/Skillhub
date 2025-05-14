@@ -5,25 +5,34 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document(collection = "posts")
+@Document(collection = "posts") // Maps this class to the "posts" collection in MongoDB
 public class Post {
 
     @Id
-    private String id;
-    private String userId; // Foreign key reference to User
-    private String postType;
-    private String title;
-    private String description;
-    private List<String> images; // Changed from single image to list of images
-    private List<String> videos; // Added videos field
-    private int visibilityCount;
-    private LocalDateTime timestamp;
+    private String id; // Unique identifier for the post (MongoDB document ID)
 
-    // Constructors
+    private String userId; // ID of the user who created the post (foreign key reference)
+
+    private String postType; // Type or category of the post (e.g., Programming, Cooking, etc.)
+
+    private String title; // Title of the post
+
+    private String description; // Main content/description of the post
+
+    private List<String> images; // List of image URLs associated with the post
+
+    private List<String> videos; // List of video URLs associated with the post
+
+    private int visibilityCount; // Number of times the post has been viewed
+
+    private LocalDateTime timestamp; // Date and time when the post was created
+
+    // Default constructor initializes the timestamp with current time
     public Post() {
-        this.timestamp = LocalDateTime.now(); // Set default timestamp
+        this.timestamp = LocalDateTime.now();
     }
 
+    // Parameterized constructor to quickly create a Post object with all fields
     public Post(String userId, String postType, String title, String description, 
                 List<String> images, List<String> videos, int visibilityCount) {
         this.userId = userId;
@@ -33,10 +42,11 @@ public class Post {
         this.images = images;
         this.videos = videos;
         this.visibilityCount = visibilityCount;
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = LocalDateTime.now(); // Set timestamp at creation
     }
 
-    // Getters and Setters
+    // Getters and Setters for all fields
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
