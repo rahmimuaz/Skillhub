@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8006/api/posts';
+const API_URL = 'http://localhost:9006/api/posts';
 
 export const postService = {
     getAllPosts: async () => {
