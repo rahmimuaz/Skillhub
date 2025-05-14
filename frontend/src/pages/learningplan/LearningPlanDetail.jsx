@@ -14,12 +14,11 @@ const LearningPlanDetail = () => {
   const [error, setError] = useState('');
   const [showShareModal, setShowShareModal] = useState(false);
 
-  // Get user ID from storage or use a default one for testing
   const getUserId = () => {
     return localStorage.getItem('userId') || sessionStorage.getItem('userId') || 'user123';
   };
 
-  const SHARED_USER_ID = "sharedUser123"; // Using the same shared user ID as in your API file
+  const SHARED_USER_ID = "sharedUser123";
 
   useEffect(() => {
     const fetchPlan = async () => {
@@ -130,7 +129,8 @@ const LearningPlanDetail = () => {
 
   return (
     <Container className="mt-4">
-      <h2>{plan.title || 'Untitled Plan'}</h2>
+      {/* Plan Title in White */}
+      <h2 style={{ color: 'white' }}>{plan.title || 'Untitled Plan'}</h2>
       <p>{plan.description || 'No description available'}</p>
       
       <div className="mb-3">
@@ -145,7 +145,8 @@ const LearningPlanDetail = () => {
         </Alert>
       )}
 
-      <h3>Topics</h3>
+      {/* Topics Title in White */}
+      <h3 style={{ color: 'white' }}>Topics</h3>
       {Array.isArray(plan.topics) && plan.topics.length > 0 ? (
         plan.topics.map((topic) => (
           <Card key={topic.id || `topic-${Math.random()}`} className="mb-3">
