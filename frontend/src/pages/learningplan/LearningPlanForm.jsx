@@ -21,7 +21,9 @@ const LearningPlanForm = ({ onCancel }) => {
     userId: getUserId(),
     sharedWith: []
   });
+
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
@@ -32,6 +34,9 @@ const LearningPlanForm = ({ onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError('');
+    setSuccess(false);
+
     try {
       await axios.post(`${API_URL}/plans`, plan, {
         headers: {
@@ -39,7 +44,13 @@ const LearningPlanForm = ({ onCancel }) => {
           'Access-Control-Allow-Origin': '*'
         }
       });
-      navigate('/', { state: { successMessage: 'Learning plan created successfully!' } });
+
+      setSuccess(true);
+
+      // Optionally, navigate after a delay
+      setTimeout(() => {
+        navigate('/', { state: { successMessage: 'Learning plan created successfully!' } });
+      }, 2000);
     } catch (err) {
       setError('Failed to save learning plan. Please try again.');
       console.error(err);
@@ -125,6 +136,17 @@ const LearningPlanForm = ({ onCancel }) => {
         {error && (
           <Alert variant="danger" className="fade-in mb-4">
             {error}
+          </Alert>
+        )}
+
+        {success && (
+          <Alert variant="success" className="fade-in mb-4 d-flex align-items-center">
+            <span style={{
+              fontSize: '1.5rem',
+              marginRight: '10px',
+              color: '#28a745'
+            }}>✔</span>
+            <div style={{ fontWeight: '500' }}>Learning plan created successfully!</div>
           </Alert>
         )}
 
@@ -254,7 +276,7 @@ const LearningPlanForm = ({ onCancel }) => {
 
       <style jsx global>{`
         .fade-in {
-          animation: fadeIn 0.3s ease-in;
+          animation: fadeIn 0.4s ease-in;
         }
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(-10px); }
