@@ -46,8 +46,6 @@ const LearningPlanForm = ({ onCancel }) => {
       });
 
       setSuccess(true);
-
-      // Optionally, navigate after a delay
       setTimeout(() => {
         navigate('/', { state: { successMessage: 'Learning plan created successfully!' } });
       }, 2000);
@@ -105,8 +103,19 @@ const LearningPlanForm = ({ onCancel }) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '2rem'
+      padding: '2rem',
+      position: 'relative'
     }}>
+      {/* ✅ Centered Success Overlay */}
+      {success && (
+        <div className="success-overlay">
+          <div className="success-message">
+            <div className="checkmark">✔</div>
+            <h4>Learning Plan Created Successfully!</h4>
+          </div>
+        </div>
+      )}
+
       <Container style={{
         backgroundColor: '#ffffff',
         borderRadius: '16px',
@@ -114,7 +123,10 @@ const LearningPlanForm = ({ onCancel }) => {
         padding: '2.5rem',
         width: '100%',
         maxWidth: '800px',
-        border: '1px solid #e0e0e0'
+        border: '1px solid #e0e0e0',
+        opacity: success ? 0.3 : 1,
+        pointerEvents: success ? 'none' : 'auto',
+        transition: 'opacity 0.3s ease'
       }}>
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2 style={{
@@ -136,17 +148,6 @@ const LearningPlanForm = ({ onCancel }) => {
         {error && (
           <Alert variant="danger" className="fade-in mb-4">
             {error}
-          </Alert>
-        )}
-
-        {success && (
-          <Alert variant="success" className="fade-in mb-4 d-flex align-items-center">
-            <span style={{
-              fontSize: '1.5rem',
-              marginRight: '10px',
-              color: '#28a745'
-            }}>✔</span>
-            <div style={{ fontWeight: '500' }}>Learning plan created successfully!</div>
           </Alert>
         )}
 
@@ -274,6 +275,7 @@ const LearningPlanForm = ({ onCancel }) => {
         </Form>
       </Container>
 
+      {/* ✅ Extra Styling */}
       <style jsx global>{`
         .fade-in {
           animation: fadeIn 0.4s ease-in;
@@ -282,8 +284,45 @@ const LearningPlanForm = ({ onCancel }) => {
           from { opacity: 0; transform: translateY(-10px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        body {
-          background-color: #f0f2f5;
+
+        .success-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background: rgba(240, 242, 245, 0.9);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+          animation: fadeIn 0.4s ease-in;
+        }
+
+        .success-message {
+          background-color: #ffffff;
+          padding: 3rem 4rem;
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+          text-align: center;
+          max-width: 500px;
+        }
+
+        .success-message h4 {
+          color: #28a745;
+          margin-top: 1rem;
+          font-weight: 600;
+        }
+
+        .checkmark {
+          font-size: 3rem;
+          color: #28a745;
+          animation: pop 0.3s ease-out;
+        }
+
+        @keyframes pop {
+          0% { transform: scale(0.8); opacity: 0; }
+          100% { transform: scale(1); opacity: 1; }
         }
       `}</style>
     </div>
