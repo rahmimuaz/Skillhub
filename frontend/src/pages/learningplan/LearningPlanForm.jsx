@@ -21,10 +21,9 @@ const LearningPlanForm = ({ onCancel }) => {
     userId: getUserId(),
     sharedWith: []
   });
-
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,9 +33,6 @@ const LearningPlanForm = ({ onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setError('');
-    setSuccess(false);
-
     try {
       await axios.post(`${API_URL}/plans`, plan, {
         headers: {
@@ -44,7 +40,6 @@ const LearningPlanForm = ({ onCancel }) => {
           'Access-Control-Allow-Origin': '*'
         }
       });
-
       setSuccess(true);
       setTimeout(() => {
         navigate('/', { state: { successMessage: 'Learning plan created successfully!' } });
@@ -103,19 +98,8 @@ const LearningPlanForm = ({ onCancel }) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '2rem',
-      position: 'relative'
+      padding: '2rem'
     }}>
-      {/* ✅ Centered Success Overlay */}
-      {success && (
-        <div className="success-overlay">
-          <div className="success-message">
-            <div className="checkmark">✔</div>
-            <h4>Learning Plan Created Successfully!</h4>
-          </div>
-        </div>
-      )}
-
       <Container style={{
         backgroundColor: '#ffffff',
         borderRadius: '16px',
@@ -123,10 +107,7 @@ const LearningPlanForm = ({ onCancel }) => {
         padding: '2.5rem',
         width: '100%',
         maxWidth: '800px',
-        border: '1px solid #e0e0e0',
-        opacity: success ? 0.3 : 1,
-        pointerEvents: success ? 'none' : 'auto',
-        transition: 'opacity 0.3s ease'
+        border: '1px solid #e0e0e0'
       }}>
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2 style={{
@@ -136,8 +117,8 @@ const LearningPlanForm = ({ onCancel }) => {
           }}>
             Create New Learning Plan
           </h2>
-          <Button 
-            variant="link" 
+          <Button
+            variant="link"
             onClick={handleCancel}
             style={{ color: '#6c757d' }}
           >
@@ -190,8 +171,8 @@ const LearningPlanForm = ({ onCancel }) => {
 
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h3 style={{ fontWeight: '600', color: '#4a4a4a' }}>Topics</h3>
-            <Button 
-              variant="outline-primary" 
+            <Button
+              variant="outline-primary"
               onClick={handleAddTopic}
               style={{
                 borderRadius: '8px',
@@ -238,8 +219,8 @@ const LearningPlanForm = ({ onCancel }) => {
           )}
 
           <div className="d-flex justify-content-end gap-3 mt-4">
-            <Button 
-              variant="outline-secondary" 
+            <Button
+              variant="outline-secondary"
               onClick={handleCancel}
               style={{
                 borderRadius: '8px',
@@ -248,8 +229,8 @@ const LearningPlanForm = ({ onCancel }) => {
             >
               Cancel
             </Button>
-            <Button 
-              variant="primary" 
+            <Button
+              variant="primary"
               type="submit"
               disabled={isSubmitting}
               style={{
@@ -275,54 +256,77 @@ const LearningPlanForm = ({ onCancel }) => {
         </Form>
       </Container>
 
-      {/* ✅ Extra Styling */}
+      {/* Success Modal */}
+      {success && (
+        <div className="modal-overlay">
+          <div className="modal-card">
+            <div className="check-icon">✅</div>
+            <h2>Plan Created Successfully</h2>
+            <p>Your learning plan has been saved. Redirecting...</p>
+          </div>
+        </div>
+      )}
+
       <style jsx global>{`
         .fade-in {
-          animation: fadeIn 0.4s ease-in;
+          animation: fadeIn 0.3s ease-in;
         }
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(-10px); }
           to { opacity: 1; transform: translateY(0); }
         }
 
-        .success-overlay {
+        .modal-overlay {
           position: fixed;
           top: 0;
           left: 0;
-          height: 100vh;
-          width: 100vw;
-          background: rgba(240, 242, 245, 0.9);
+          width: 100%;
+          height: 100%;
+          backdrop-filter: blur(6px);
+          background-color: rgba(0, 0, 0, 0.25);
           display: flex;
-          justify-content: center;
           align-items: center;
-          z-index: 1000;
-          animation: fadeIn 0.4s ease-in;
+          justify-content: center;
+          z-index: 9999;
+          animation: fadeIn 0.4s ease-out;
         }
 
-        .success-message {
-          background-color: #ffffff;
-          padding: 3rem 4rem;
+        .modal-card {
+          background: #fff;
           border-radius: 16px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+          padding: 3rem 2.5rem;
+          max-width: 420px;
+          width: 100%;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
           text-align: center;
-          max-width: 500px;
+          animation: scaleIn 0.3s ease-out;
         }
 
-        .success-message h4 {
+        .check-icon {
+          font-size: 3.5rem;
           color: #28a745;
-          margin-top: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .modal-card h2 {
+          margin-bottom: 0.5rem;
+          font-size: 1.6rem;
           font-weight: 600;
+          color: #333;
         }
 
-        .checkmark {
-          font-size: 3rem;
-          color: #28a745;
-          animation: pop 0.3s ease-out;
+        .modal-card p {
+          font-size: 1rem;
+          color: #666;
         }
 
-        @keyframes pop {
-          0% { transform: scale(0.8); opacity: 0; }
-          100% { transform: scale(1); opacity: 1; }
+        @keyframes scaleIn {
+          from { transform: scale(0.9); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+
+        body {
+          background-color: #f0f2f5;
         }
       `}</style>
     </div>
