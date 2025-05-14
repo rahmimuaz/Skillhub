@@ -1,132 +1,142 @@
+/* ADD THIS PART TO THE TOP OF LearningPlanList.css */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 /* LearningPlanList.css */
 
 .body-bg {
-    background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-    min-height: 100vh;
-    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-    padding: 0;
-    margin: 0;
-    width: 100vw;
-    box-sizing: border-box;
-  }
-  
-  .lp-container {
-    width: 100%;
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 32px 16px 32px 16px;
-    box-sizing: border-box;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .glass-card {
-    background: rgba(255,255,255,0.75);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border-radius: 18px;
-    border: 1px solid rgba(255,255,255,0.3);
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
-    transition: transform 0.15s, box-shadow 0.15s;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .glass-card.hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 16px 40px 0 rgba(31,38,135,0.22);
-  }
-  
-  .plan-desc {
-    min-height: 44px;
-    color: #444;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .glass-tabs {
-    background: rgba(255,255,255,0.6);
-    border-radius: 12px;
-    margin-bottom: 16px;
-    padding: 6px 8px;
-  }
-  
-  .glass-alert {
-    background: rgba(255,255,255,0.7) !important;
-    border-radius: 16px;
-    border: none;
-  }
-  
-  .centered-content {
-    min-height: 60vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .tab-nav {
-    border: none;
-    margin-bottom: 0;
-    background: transparent;
-  }
-  
-  .tab-nav-link {
-    color: #235390;
-    font-weight: 500;
-    border-radius: 12px 12px 0 0;
-    margin-right: 4px;
-    padding: 10px 24px;
-    background: transparent;
-    border: none;
-    transition: background 0.2s, color 0.2s;
-    outline: none;
-    cursor: pointer;
-  }
-  
-  .tab-nav-link.active {
-    background: rgba(255,255,255,0.6);
-    border-bottom: 2px solid #4f8cff;
-    color: #235390;
-    font-weight: bold;
-  }
-  
-  .row-gap {
-    row-gap: 32px;
-  }
-  
-  /* View/Delete icon buttons */
-  .icon-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    border: none;
-    transition: background 0.2s, box-shadow 0.2s;
-    font-size: 18px;
-    margin-left: 6px;
-    margin-right: 6px;
-    background: rgba(76, 110, 245, 0.08);
-    color: #235390;
-    outline: none;
-    cursor: pointer;
-  }
-  .icon-btn:hover, .icon-btn:focus {
-    background: rgba(76, 110, 245, 0.18);
-  }
-  
-  .icon-btn.delete {
-    background: rgba(255, 76, 76, 0.09);
-    color: #c82333;
-  }
-  .icon-btn.delete:hover, .icon-btn.delete:focus {
-    background: rgba(255, 76, 76, 0.22);
-    color: #a71d2a;
-  }
-  
+  background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  min-height: 100vh;
+  height: 100%;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+/* The rest of your existing CSS remains unchanged below */
+.lp-container {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 32px 16px 32px 16px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.glass-card {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+  transition: transform 0.15s, box-shadow 0.15s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.glass-card.hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 16px 40px 0 rgba(31,38,135,0.22);
+}
+
+.plan-desc {
+  min-height: 44px;
+  color: #444;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.glass-tabs {
+  background: rgba(255,255,255,0.6);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  padding: 6px 8px;
+}
+
+.glass-alert {
+  background: rgba(255,255,255,0.7) !important;
+  border-radius: 16px;
+  border: none;
+}
+
+.centered-content {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-nav {
+  border: none;
+  margin-bottom: 0;
+  background: transparent;
+}
+
+.tab-nav-link {
+  color: #235390;
+  font-weight: 500;
+  border-radius: 12px 12px 0 0;
+  margin-right: 4px;
+  padding: 10px 24px;
+  background: transparent;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+  cursor: pointer;
+}
+
+.tab-nav-link.active {
+  background: rgba(255,255,255,0.6);
+  border-bottom: 2px solid #4f8cff;
+  color: #235390;
+  font-weight: bold;
+}
+
+.row-gap {
+  row-gap: 32px;
+}
+
+/* View/Delete icon buttons */
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  transition: background 0.2s, box-shadow 0.2s;
+  font-size: 18px;
+  margin-left: 6px;
+  margin-right: 6px;
+  background: rgba(76, 110, 245, 0.08);
+  color: #235390;
+  outline: none;
+  cursor: pointer;
+}
+
+.icon-btn:hover, .icon-btn:focus {
+  background: rgba(76, 110, 245, 0.18);
+}
+
+.icon-btn.delete {
+  background: rgba(255, 76, 76, 0.09);
+  color: #c82333;
+}
+
+.icon-btn.delete:hover, .icon-btn.delete:focus {
+  background: rgba(255, 76, 76, 0.22);
+  color: #a71d2a;
+}
