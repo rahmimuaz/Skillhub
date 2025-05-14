@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Card, Button, ListGroup, Badge, Alert } from 'react-bootstrap';
 import axios from 'axios';
-import SharePlanModal from './SharePlanModal';
 
 const API_URL = 'http://localhost:9006/api';
 
@@ -12,13 +11,6 @@ const LearningPlanDetail = () => {
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [showShareModal, setShowShareModal] = useState(false);
-
-  const getUserId = () => {
-    return localStorage.getItem('userId') || sessionStorage.getItem('userId') || 'user123';
-  };
-
-  const SHARED_USER_ID = "sharedUser123";
 
   useEffect(() => {
     const fetchPlan = async () => {
@@ -73,19 +65,18 @@ const LearningPlanDetail = () => {
     }
   };
 
-  const handleShare = () => {
-    setShowShareModal(true);
-  };
+  const handleShare = async () => {
+    const username = prompt("Enter the username you want to share this plan with:");
+    if (!username) return;
 
-  const handleShareSubmit = async () => {
     try {
-      await axios.post(`${API_URL}/plans/${id}/share/${SHARED_USER_ID}`, {}, {
+      await axios.post(`${API_URL}/plans/${id}/share/${username}`, {}, {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         }
       });
-      setShowShareModal(false);
+      alert(`Plan shared with ${username}`);
       navigate('/');
     } catch (err) {
       setError(`Failed to share learning plan: ${err.message || 'Unknown error'}`);
@@ -194,7 +185,6 @@ const LearningPlanDetail = () => {
           <Alert variant="info">No topics added to this plan yet</Alert>
         )}
 
-        {/* Buttons at Bottom */}
         <div style={{ textAlign: 'center', marginTop: '30px' }}>
           <Button variant="primary" onClick={handleEdit} className="me-2">
             Edit
@@ -206,12 +196,6 @@ const LearningPlanDetail = () => {
             Share
           </Button>
         </div>
-
-        <SharePlanModal
-          show={showShareModal}
-          onHide={() => setShowShareModal(false)}
-          onSubmit={handleShareSubmit}
-        />
       </div>
     </Container>
   );
