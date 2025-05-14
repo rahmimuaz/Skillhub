@@ -6,6 +6,7 @@ import { createPost, updatePost } from '../services/api';
 import './PostForm.css';
 
 const PostForm = ({ postToEdit, onSuccess }) => {
+  // State hooks for form fields
   const [title, setTitle] = useState(postToEdit?.title || '');
   const [category, setCategory] = useState(postToEdit?.postType || 'Programming');
   const [description, setDescription] = useState(postToEdit?.description || '');
@@ -13,10 +14,12 @@ const PostForm = ({ postToEdit, onSuccess }) => {
   const [videos, setVideos] = useState(postToEdit?.videos || []);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
+  // Refs for file inputs
   const fileInputRef = useRef(null);
   const videoInputRef = useRef(null);
 
+  // Handle image file upload
   const handleImageUpload = (event) => {
     const files = event.target.files;
     if (files) {
@@ -25,6 +28,7 @@ const PostForm = ({ postToEdit, onSuccess }) => {
     }
   };
 
+  // Handle video file upload
   const handleVideoUpload = (event) => {
     const files = event.target.files;
     if (files) {
@@ -33,22 +37,27 @@ const PostForm = ({ postToEdit, onSuccess }) => {
     }
   };
 
+  // Remove image by index
   const removeImage = (index) => {
     setImages(images.filter((_, i) => i !== index));
   };
 
+  // Remove video by index
   const removeVideo = (index) => {
     setVideos(videos.filter((_, i) => i !== index));
   };
 
+  // Append selected emoji to description
   const onEmojiClick = (emojiData) => {
     setDescription(prev => prev + emojiData.emoji);
     setShowEmojiPicker(false);
   };
 
+  // Form submission handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    // Validate required fields
     if (!title.trim() || !description.trim()) {
       toast.error('Please fill in all required fields');
       return;
@@ -57,6 +66,7 @@ const PostForm = ({ postToEdit, onSuccess }) => {
     setIsSubmitting(true);
 
     try {
+      // Prepare data to be sent
       const postData = {
         title,
         postType: category,
@@ -64,19 +74,23 @@ const PostForm = ({ postToEdit, onSuccess }) => {
         images,
         videos,
         visibilityCount: 0,
-        userId: "user123"
+        userId: "user123" // Replace with dynamic user ID in real app
       };
 
       let response;
+
+      // Call appropriate API depending on whether editing or creating
       if (postToEdit?.id) {
         response = await updatePost(postToEdit.id, postData);
       } else {
         response = await createPost(postData);
       }
-      
+
+      // Notify parent and show success toast
       onSuccess(response.data);
       toast.success(postToEdit ? 'Post updated successfully!' : 'Post created successfully!');
-      
+
+      // Clear form if creating new post
       if (!postToEdit) {
         setTitle('');
         setCategory('Programming');
@@ -96,10 +110,9 @@ const PostForm = ({ postToEdit, onSuccess }) => {
     <form onSubmit={handleSubmit} className="post-form">
       <h2 className="post-form-title">{postToEdit ? 'Edit Post' : 'Create New Post'}</h2>
 
+      {/* Title input */}
       <div className="post-form-group">
-        <label htmlFor="title" className="form-label">
-          Title *
-        </label>
+        <label htmlFor="title" className="form-label">Title *</label>
         <input
           id="title"
           type="text"
@@ -110,10 +123,9 @@ const PostForm = ({ postToEdit, onSuccess }) => {
         />
       </div>
 
+      {/* Category dropdown */}
       <div className="post-form-group">
-        <label htmlFor="category" className="form-label">
-          Category
-        </label>
+        <label htmlFor="category" className="form-label">Category</label>
         <select
           id="category"
           value={category}
@@ -126,10 +138,9 @@ const PostForm = ({ postToEdit, onSuccess }) => {
         </select>
       </div>
 
+      {/* Description with emoji picker */}
       <div className="post-form-group">
-        <label htmlFor="description" className="form-label">
-          Description *
-        </label>
+        <label htmlFor="description" className="form-label">Description *</label>
         <div className="textarea-container">
           <textarea
             id="description"
@@ -138,6 +149,7 @@ const PostForm = ({ postToEdit, onSuccess }) => {
             className="form-textarea"
             required
           />
+          {/* Emoji picker toggle button */}
           <button
             type="button"
             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
@@ -146,6 +158,7 @@ const PostForm = ({ postToEdit, onSuccess }) => {
             <Smile size={20} />
           </button>
         </div>
+        {/* Emoji picker component */}
         {showEmojiPicker && (
           <div className="emoji-picker">
             <EmojiPicker onEmojiClick={onEmojiClick} />
@@ -153,21 +166,14 @@ const PostForm = ({ postToEdit, onSuccess }) => {
         )}
       </div>
 
+      {/* Image uploader */}
       <div className="post-form-group">
         <label className="form-label">Images</label>
         <div className="media-grid">
           {images.map((image, index) => (
             <div key={index} className="media-item">
-              <img
-                src={image}
-                alt={`Upload ${index + 1}`}
-                className="preview-image"
-              />
-              <button
-                type="button"
-                onClick={() => removeImage(index)}
-                className="remove-button"
-              >
+              <img src={image} alt={`Upload ${index + 1}`} className="preview-image" />
+              <button type="button" onClick={() => removeImage(index)} className="remove-button">
                 <X size={16} />
               </button>
             </div>
@@ -191,21 +197,14 @@ const PostForm = ({ postToEdit, onSuccess }) => {
         />
       </div>
 
+      {/* Video uploader */}
       <div className="post-form-group">
         <label className="form-label">Videos</label>
         <div className="media-grid">
           {videos.map((video, index) => (
             <div key={index} className="media-item">
-              <video
-                src={video}
-                controls
-                className="preview-video"
-              />
-              <button
-                type="button"
-                onClick={() => removeVideo(index)}
-                className="remove-button"
-              >
+              <video src={video} controls className="preview-video" />
+              <button type="button" onClick={() => removeVideo(index)} className="remove-button">
                 <X size={16} />
               </button>
             </div>
@@ -229,11 +228,8 @@ const PostForm = ({ postToEdit, onSuccess }) => {
         />
       </div>
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="submit-button"
-      >
+      {/* Submit button with loading indicator */}
+      <button type="submit" disabled={isSubmitting} className="submit-button">
         {isSubmitting ? (
           <>
             <Upload className="spinner" size={20} />
