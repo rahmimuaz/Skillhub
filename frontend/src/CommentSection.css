@@ -1,0 +1,170 @@
+.comments-section {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.comments-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.comment-input-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.comment-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.comment-submit {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment-submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.comment-item {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: #333;
+}
+
+.comment-date {
+  color: #666;
+  font-size: 12px;
+}
+
+.comment-content {
+  color: #444;
+  line-height: 1.4;
+}
+
+.comment-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.edit-comment,
+.delete-comment {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.edit-comment:hover {
+  color: #007bff;
+}
+
+.delete-comment:hover {
+  color: #dc3545;
+}
+
+.comment-edit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.comment-edit-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.comment-edit-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.comment-edit-save,
+.comment-edit-cancel {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment-edit-save {
+  background-color: #28a745;
+  color: white;
+}
+
+.comment-edit-save:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.comment-edit-cancel {
+  background-color: #dc3545;
+  color: white;
+}
+
+.no-comments {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+}
+
+.comments-loading,
+.comments-error {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.comments-error {
+  color: #dc3545;
+} 
