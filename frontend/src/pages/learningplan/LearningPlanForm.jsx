@@ -267,7 +267,8 @@ const LearningPlanForm = ({ onCancel }) => {
         </div>
       )}
 
-      <style jsx global>{`
+      {/* ✅ FIXED: Removed invalid jsx/global props */}
+      <style>{`
         .fade-in {
           animation: fadeIn 0.3s ease-in;
         }
