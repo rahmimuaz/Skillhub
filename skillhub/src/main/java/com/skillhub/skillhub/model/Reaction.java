@@ -1,18 +1,29 @@
 package com.skillhub.skillhub.model;
-import org.springframework.data.annotation.Id;  // Correct import for @Id
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
-@Document(collection = "comments")
-public class Comment {
-    @Id  // Now this will work with the correct import
+@Document(collection = "reactions")
+public class Reaction {
+    @Id
     private String id;
     private String postId;
     private String userId;
-    private String content;
+    private String reactionType;  // "LIKE", "LOVE", "CLAP", etc.
     private LocalDateTime timestamp = LocalDateTime.now();
 
-    // Getters and Setters remain the same
+    // Constructors
+    public Reaction() {
+    }
+
+    public Reaction(String postId, String userId, String reactionType) {
+        this.postId = postId;
+        this.userId = userId;
+        this.reactionType = reactionType;
+    }
+
+    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -37,12 +48,12 @@ public class Comment {
         this.userId = userId;
     }
 
-    public String getContent() {
-        return content;
+    public String getReactionType() {
+        return reactionType;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setReactionType(String reactionType) {
+        this.reactionType = reactionType;
     }
 
     public LocalDateTime getTimestamp() {
@@ -52,4 +63,4 @@ public class Comment {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
-}
+} 

@@ -1,42 +1,34 @@
 package com.skillhub.skillhub.controller;   
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.skillhub.skillhub.model.Comment;
 import com.skillhub.skillhub.service.CommentService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/api/comments")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class CommentController {
-
     @Autowired
     private CommentService commentService;
 
-    @PostMapping("/{postId}")
-    public Comment addComment(@PathVariable String postId, @RequestBody Comment comment) {
-        return commentService.addComment(postId, comment);
-    }
-
-    @GetMapping("/{postId}")
+    @GetMapping("/post/{postId}")
     public List<Comment> getCommentsByPostId(@PathVariable String postId) {
         return commentService.getCommentsByPostId(postId);
     }
 
-    @GetMapping("/{postId}/{id}")
-    public Optional<Comment> getCommentById(@PathVariable String postId, @PathVariable String id) {
-        return commentService.getCommentById(postId, id);
+    @PostMapping
+    public ResponseEntity<Comment> addComment(@RequestBody Comment comment) {
+        Comment savedComment = commentService.addComment(comment);
+        return ResponseEntity.ok(savedComment);
     }
 
-    @PutMapping("/{postId}/{id}")
-    public Comment updateComment(@PathVariable String postId, @PathVariable String id, @RequestBody Comment comment) {
-        return commentService.updateComment(postId, id, comment);
-    }
-
-    @DeleteMapping("/{postId}/{id}")
-    public void deleteComment(@PathVariable String postId, @PathVariable String id) {
-        commentService.deleteComment(postId, id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteComment(@PathVariable String id) {
+        commentService.deleteComment(id);
+        return ResponseEntity.ok().build();
     }
 }

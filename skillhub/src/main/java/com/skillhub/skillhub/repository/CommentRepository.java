@@ -6,6 +6,5 @@ import com.skillhub.skillhub.model.Comment;
 import java.util.List;
 
 public interface CommentRepository extends MongoRepository<Comment, String> {
-    List<Comment> findAllByPostId(String postId);
+    List<Comment> findByPostId(String postId);
 }
-

@@ -3,7 +3,9 @@ package com.skillhub.skillhub.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Document(collection = "posts")
 public class Post {
@@ -14,26 +16,26 @@ public class Post {
     private String postType;
     private String title;
     private String description;
-    private List<String> images; // Changed from single image to list of images
-    private List<String> videos; // Added videos field
+    private String image; // URL or base64 image string
+    private List<String> images; // Array of image URLs or base64 strings
     private int visibilityCount;
     private LocalDateTime timestamp;
 
     // Constructors
     public Post() {
         this.timestamp = LocalDateTime.now(); // Set default timestamp
+        this.images = new ArrayList<>();
     }
 
-    public Post(String userId, String postType, String title, String description, 
-                List<String> images, List<String> videos, int visibilityCount) {
+    public Post(String userId, String postType, String title, String description, String image, int visibilityCount) {
         this.userId = userId;
         this.postType = postType;
         this.title = title;
         this.description = description;
-        this.images = images;
-        this.videos = videos;
+        this.image = image;
         this.visibilityCount = visibilityCount;
         this.timestamp = LocalDateTime.now();
+        this.images = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -52,11 +54,11 @@ public class Post {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
+    
     public List<String> getImages() { return images; }
     public void setImages(List<String> images) { this.images = images; }
-
-    public List<String> getVideos() { return videos; }
-    public void setVideos(List<String> videos) { this.videos = videos; }
 
     public int getVisibilityCount() { return visibilityCount; }
     public void setVisibilityCount(int visibilityCount) { this.visibilityCount = visibilityCount; }
