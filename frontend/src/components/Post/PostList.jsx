@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import {
-  Pencil, Trash2, RefreshCw, Video, Calendar, User, Eye
+  Pencil, Trash2, RefreshCw, Video, Calendar, User, Eye, Plus
 } from 'lucide-react';
 import { getPosts, deletePost } from '../../services/postApi';
+import PostCard from './PostCard';
 import toast from 'react-hot-toast';
 import './PostList.css';
 
-const PostList = ({ onEdit }) => {
-  // Keep all existing state and logic unchanged
+const PostList = ({ onEdit, onNewPost }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [viewMode, setViewMode] = useState('card'); // 'card' or 'table'
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -78,17 +79,58 @@ const PostList = ({ onEdit }) => {
     <div className="post-list">
       <div className="post-header">
         <h2 className="post-title">All Posts</h2>
-        <button
-          onClick={fetchPosts}
-          className="refresh-button"
-        >
-          <RefreshCw size={16} />
-          Refresh
-        </button>
+        <div className="post-actions">
+          {onNewPost && (
+            <button
+              onClick={onNewPost}
+              className="new-post-button"
+            >
+              <Plus size={18} />
+              New Post
+            </button>
+          )}
+          <button
+            onClick={fetchPosts}
+            className="refresh-button"
+          >
+            <RefreshCw size={16} />
+            Refresh
+          </button>
+          <div className="view-toggle">
+            <button 
+              className={`view-toggle-button ${viewMode === 'card' ? 'active' : ''}`}
+              onClick={() => setViewMode('card')}
+            >
+              Card View
+            </button>
+            <button 
+              className={`view-toggle-button ${viewMode === 'table' ? 'active' : ''}`}
+              onClick={() => setViewMode('table')}
+            >
+              Table View
+            </button>
+          </div>
+        </div>
       </div>
 
       {posts.length === 0 ? (
-        <div className="empty-state">No posts found. Create your first post!</div>
+        <div className="empty-state">
+          <p>No posts found.</p>
+          {onNewPost && (
+            <button onClick={onNewPost} className="create-post-button">
+              Create your first post
+            </button>
+          )}
+        </div>
+      ) : viewMode === 'card' ? (
+        <div className="post-grid">
+          {posts.map((post) => (
+            <PostCard 
+              key={post.id} 
+              post={post} 
+            />
+          ))}
+        </div>
       ) : (
         <div className="table-container">
           <table className="post-table">

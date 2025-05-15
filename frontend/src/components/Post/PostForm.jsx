@@ -19,19 +19,60 @@ const PostForm = ({ postToEdit, onSuccess }) => {
   const fileInputRef = useRef(null);
   const videoInputRef = useRef(null);
 
-  const handleImageUpload = (event) => {
-    const files = event.target.files;
-    if (files) {
-      const newImages = Array.from(files).map(file => URL.createObjectURL(file));
-      setImages([...images, ...newImages]);
+  const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+  const MAX_VIDEO_SIZE = 10 * 1024 * 1024; // 10MB
+
+  const validateFileSize = (file, maxSize) => {
+    if (file.size > maxSize) {
+      const sizeInMB = maxSize / (1024 * 1024);
+      throw new Error(`File size exceeds ${sizeInMB}MB limit`);
     }
   };
 
-  const handleVideoUpload = (event) => {
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const handleImageUpload = async (event) => {
     const files = event.target.files;
     if (files) {
-      const newVideos = Array.from(files).map(file => URL.createObjectURL(file));
-      setVideos([...videos, ...newVideos]);
+      try {
+        const newImages = await Promise.all(
+          Array.from(files).map(async (file) => {
+            validateFileSize(file, MAX_IMAGE_SIZE);
+            const base64 = await convertToBase64(file);
+            return base64;
+          })
+        );
+        setImages([...images, ...newImages]);
+      } catch (error) {
+        console.error('Error uploading images:', error);
+        toast.error(error.message || 'Error uploading images. Please try again.');
+      }
+    }
+  };
+
+  const handleVideoUpload = async (event) => {
+    const files = event.target.files;
+    if (files) {
+      try {
+        const newVideos = await Promise.all(
+          Array.from(files).map(async (file) => {
+            validateFileSize(file, MAX_VIDEO_SIZE);
+            const base64 = await convertToBase64(file);
+            return base64;
+          })
+        );
+        setVideos([...videos, ...newVideos]);
+      } catch (error) {
+        console.error('Error uploading videos:', error);
+        toast.error(error.message || 'Error uploading videos. Please try again.');
+      }
     }
   };
 
@@ -162,6 +203,11 @@ const PostForm = ({ postToEdit, onSuccess }) => {
 
       <div className="post-form-group">
         <label className="form-label">Images</label>
+        {images.length === 0 && (
+          <div className="empty-media-message">
+            Upload images to make your post more engaging
+          </div>
+        )}
         <div className="media-grid">
           {images.map((image, index) => (
             <div key={index} className="media-item">
@@ -169,6 +215,10 @@ const PostForm = ({ postToEdit, onSuccess }) => {
                 src={image}
                 alt={`Upload ${index + 1}`}
                 className="preview-image"
+                onError={(e) => {
+                  console.error('Preview image failed to load');
+                  e.target.src = 'https://via.placeholder.com/150?text=Preview';
+                }}
               />
               <button
                 type="button"
@@ -196,6 +246,11 @@ const PostForm = ({ postToEdit, onSuccess }) => {
           onChange={handleImageUpload}
           className="hidden-input"
         />
+        {images.length > 0 && (
+          <div className="upload-note">
+            <small>The first image will be used as the main post image</small>
+          </div>
+        )}
       </div>
 
       <div className="post-form-group">

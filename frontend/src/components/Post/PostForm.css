@@ -180,3 +180,21 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.empty-media-message {
+  background-color: #f8f9fa;
+  border: 1px dashed #ced4da;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.upload-note {
+  margin-top: 8px;
+  color: #6c757d;
+  font-style: italic;
+  text-align: center;
+}

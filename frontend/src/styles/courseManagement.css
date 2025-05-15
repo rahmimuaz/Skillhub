@@ -32,183 +32,208 @@
 }
 
 .course-form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    margin-bottom: 1.5rem;
 }
 
 .form-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #374151;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
 }
 
-.form-input {
-    padding: 8px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    font-size: 14px;
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
 }
 
-.form-input:focus {
+.form-input:focus,
+.form-textarea:focus {
     outline: none;
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
 }
 
 .form-textarea {
-    padding: 8px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    font-size: 14px;
-    min-height: 100px;
+    min-height: 120px;
     resize: vertical;
 }
 
 .levels-section {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    margin-top: 2rem;
 }
 
 .levels-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 1rem;
+}
+
+.levels-header h3 {
+    color: #2c3e50;
+    margin: 0;
 }
 
 .add-level-btn {
-    padding: 6px 12px;
-    background-color: #10b981;
+    background: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease;
 }
 
 .add-level-btn:hover {
-    background-color: #059669;
+    background: #45a049;
 }
 
 .level-card {
-    border: 1px solid #e5e7eb;
+    background: #f8f9fa;
     border-radius: 8px;
-    padding: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .level-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
 }
 
 .level-name-input {
-    font-size: 18px;
-    font-weight: 500;
-    border: none;
-    border-bottom: 1px solid #d1d5db;
-    padding: 4px 0;
+    flex: 1;
+    margin-right: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
 }
 
 .remove-level-btn {
-    color: #dc2626;
-    background: none;
+    background: #dc3545;
+    color: white;
     border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .remove-level-btn:hover {
-    color: #b91c1c;
+    background: #c82333;
 }
 
 .tasks-section {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    margin-top: 1rem;
 }
 
 .tasks-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 1rem;
+}
+
+.tasks-header h4 {
+    color: #2c3e50;
+    margin: 0;
 }
 
 .add-task-btn {
-    padding: 4px 8px;
-    background-color: #3b82f6;
+    background: #007bff;
     color: white;
     border: none;
+    padding: 0.5rem 1rem;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 12px;
+    transition: background-color 0.2s ease;
 }
 
 .add-task-btn:hover {
-    background-color: #2563eb;
+    background: #0056b3;
 }
 
 .task-item {
     display: flex;
+    gap: 1rem;
     align-items: center;
-    gap: 8px;
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
 }
 
 .task-input {
     flex: 1;
-    padding: 6px 10px;
-    border: 1px solid #d1d5db;
+    padding: 0.5rem;
+    border: 1px solid #dee2e6;
     border-radius: 4px;
 }
 
 .remove-task-btn {
-    color: #dc2626;
-    background: none;
+    background: #dc3545;
+    color: white;
     border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .remove-task-btn:hover {
-    color: #b91c1c;
+    background: #c82333;
 }
 
 .form-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 12px;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cancel-btn,
+.submit-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .cancel-btn {
-    padding: 8px 16px;
-    background-color: white;
-    color: #374151;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    cursor: pointer;
+    background: #f8f9fa;
+    color: #2c3e50;
+    border: 1px solid #dee2e6;
 }
 
 .cancel-btn:hover {
-    background-color: #f9fafb;
+    background: #e9ecef;
 }
 
 .submit-btn {
-    padding: 8px 16px;
-    background-color: #4f46e5;
+    background: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 .submit-btn:hover {
-    background-color: #4338ca;
+    background: #45a049;
 }
 
 .course-grid {

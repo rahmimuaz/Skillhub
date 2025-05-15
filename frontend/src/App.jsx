@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { PostProvider } from './context/PostContext';
 import CourseList from './components/CourseList';
@@ -19,39 +19,53 @@ import ViewPostPage from './pages/Post/ViewPostPage';
 import Feed from './pages/Post/Feed';
 import PostForm from './pages/Post/CreatePostPage';
 
-import Navbar from './components/Navbar'; // ✅ Import separated Navbar
+import Navbar from './components/Navbar/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+
+
+
+// Create a wrapper component to handle the Navbar rendering
+const AppContent = () => {
+    const location = useLocation();
+    const isLoginPage = location.pathname === '/login';
+
     const handlePostSuccess = (post) => {
         console.log('Post submitted:', post);
     };
 
     return (
+        <div className="app">
+            {!isLoginPage && <Navbar />}
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/my-courses" element={<MyCourses />} />
+                <Route path="/courses/:courseId" element={<CourseDetail />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/courses" element={<CourseList />} />
+
+                <Route path="/plan/new" element={<LearningPlanForm />} />
+                <Route path="/plans" element={<LearningPlanList />} />
+                <Route path="/plan/edit/:id" element={<EditLearningPlanForm />} />
+                <Route path="/plan/:id" element={<LearningPlanDetail />} />
+
+                <Route path="/posts" element={<ViewPostPage />} />
+                <Route path="/feed" element={<Feed />} />
+                <Route path="/create" element={<PostForm onSuccess={handlePostSuccess} />} />
+
+            </Routes>
+        </div>
+    );
+};
+
+function App() {
+    return (
         <GoogleOAuthProvider clientId="235074436580-fekrpapo667arbo0jkqa9nmprcpqul96.apps.googleusercontent.com">
             <Router>
                 <AuthProvider>
                     <PostProvider>
-                        <div className="app">
-                            <Navbar />
-                            <Routes>
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/" element={<Home />} />
-                                <Route path="/my-courses" element={<MyCourses />} />
-                                <Route path="/courses/:courseId" element={<CourseDetail />} />
-                                <Route path="/home" element={<Home />} />
-                                <Route path="/courses" element={<CourseList />} />
-
-                                <Route path="/plan/new" element={<LearningPlanForm />} />
-                                <Route path="/plans" element={<LearningPlanList />} />
-                                <Route path="/plan/edit/:id" element={<EditLearningPlanForm />} />
-                                <Route path="/plan/:id" element={<LearningPlanDetail />} />
-
-                                <Route path="/posts" element={<ViewPostPage />} />
-                                <Route path="/feed" element={<Feed />} />
-                                <Route path="/create" element={<PostForm onSuccess={handlePostSuccess} />} />
-                            </Routes>
-                        </div>
+                        <AppContent />
                     </PostProvider>
                 </AuthProvider>
             </Router>
