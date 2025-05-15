@@ -1,63 +1,103 @@
+body {
+    background: #f4f8fb;
+}
+
 .feed-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
+    background: #f9fbfd;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
 .feed-container h1 {
     text-align: center;
     margin-bottom: 2rem;
     color: #2d3748;
-    font-size: 1.8rem;
-    font-weight: 600;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .posts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
     padding: 1rem;
 }
 
 .post-card {
     background: #ffffff;
-    border-radius: 8px;
+    border-radius: 12px;
     border: 1px solid #e2e8f0;
     padding: 1.5rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    position: relative;
+    animation: fadeIn 0.7s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
 }
 
 .post-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(49,130,206,0.10);
 }
 
 .post-card h2 {
     margin: 0 0 1rem 0;
     color: #1a202c;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.badge-new {
+    background: #38a169;
+    color: #fff;
+    font-size: 0.7rem;
     font-weight: 600;
+    border-radius: 8px;
+    padding: 0.2rem 0.7rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
 }
 
 .post-description {
     color: #4a5568;
     margin-bottom: 1rem;
-    line-height: 1.5;
-    font-size: 0.9rem;
+    line-height: 1.6;
+    font-size: 1rem;
+    min-height: 48px;
 }
 
 .post-media {
     margin: 1rem 0;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .post-media img {
     width: 100%;
-    height: 200px;
+    max-width: 260px;
+    height: 180px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 8px;
     margin-bottom: 0.5rem;
     border: 1px solid #e2e8f0;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.post-media img:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 16px rgba(49,130,206,0.13);
 }
 
 .post-footer {
@@ -70,30 +110,54 @@
 }
 
 .post-type {
-    background: #f7fafc;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    color: #4a5568;
-    font-weight: 500;
+    background: #ebf8ff;
+    padding: 0.3rem 1rem;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    color: #3182ce;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: capitalize;
 }
 
 .post-date {
     color: #718096;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
 .loading {
-    text-align: center;
-    padding: 2rem;
     color: #4a5568;
-    font-size: 1rem;
 }
 
 .error {
-    text-align: center;
-    padding: 2rem;
     color: #e53e3e;
-    font-size: 1rem;
-    font-weight: 500;
+}
+
+.no-posts {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 1.1rem;
+    padding: 3rem 0;
+}
+
+@media (max-width: 700px) {
+    .feed-container {
+        padding: 0.5rem;
+    }
+    .posts-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+    .post-media img {
+        max-width: 100%;
+        height: 140px;
+    }
 }
