@@ -6,7 +6,6 @@ import { createPost, updatePost } from '../services/api';
 import './PostForm.css';
 
 const PostForm = ({ postToEdit, onSuccess }) => {
-  // State hooks for form fields
   const [title, setTitle] = useState(postToEdit?.title || '');
   const [category, setCategory] = useState(postToEdit?.postType || 'Programming');
   const [description, setDescription] = useState(postToEdit?.description || '');
@@ -14,12 +13,11 @@ const PostForm = ({ postToEdit, onSuccess }) => {
   const [videos, setVideos] = useState(postToEdit?.videos || []);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  // Refs for file inputs
   const fileInputRef = useRef(null);
   const videoInputRef = useRef(null);
 
-  // Handle image file upload
   const handleImageUpload = (event) => {
     const files = event.target.files;
     if (files) {
@@ -28,7 +26,6 @@ const PostForm = ({ postToEdit, onSuccess }) => {
     }
   };
 
-  // Handle video file upload
   const handleVideoUpload = (event) => {
     const files = event.target.files;
     if (files) {
@@ -37,36 +34,30 @@ const PostForm = ({ postToEdit, onSuccess }) => {
     }
   };
 
-  // Remove image by index
   const removeImage = (index) => {
     setImages(images.filter((_, i) => i !== index));
   };
 
-  // Remove video by index
   const removeVideo = (index) => {
     setVideos(videos.filter((_, i) => i !== index));
   };
 
-  // Append selected emoji to description
   const onEmojiClick = (emojiData) => {
     setDescription(prev => prev + emojiData.emoji);
     setShowEmojiPicker(false);
   };
 
-  // Form submission handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate required fields
-    if (!title.trim() || !description.trim()) {
-      toast.error('Please fill in all required fields');
-      return;
-    }
+    let newErrors = {};
+    if (!title.trim()) newErrors.title = "Title is required";
+    if (!description.trim()) newErrors.description = "Description is required";
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
 
     setIsSubmitting(true);
 
     try {
-      // Prepare data to be sent
       const postData = {
         title,
         postType: category,
@@ -74,23 +65,19 @@ const PostForm = ({ postToEdit, onSuccess }) => {
         images,
         videos,
         visibilityCount: 0,
-        userId: "user123" // Replace with dynamic user ID in real app
+        userId: "user123"
       };
 
       let response;
-
-      // Call appropriate API depending on whether editing or creating
       if (postToEdit?.id) {
         response = await updatePost(postToEdit.id, postData);
       } else {
         response = await createPost(postData);
       }
 
-      // Notify parent and show success toast
       onSuccess(response.data);
       toast.success(postToEdit ? 'Post updated successfully!' : 'Post created successfully!');
 
-      // Clear form if creating new post
       if (!postToEdit) {
         setTitle('');
         setCategory('Programming');
@@ -112,7 +99,7 @@ const PostForm = ({ postToEdit, onSuccess }) => {
 
       {/* Title input */}
       <div className="post-form-group">
-        <label htmlFor="title" className="form-label">Title *</label>
+        <label htmlFor="title" className="form-label required">Title</label>
         <input
           id="title"
           type="text"
@@ -120,7 +107,9 @@ const PostForm = ({ postToEdit, onSuccess }) => {
           onChange={(e) => setTitle(e.target.value)}
           className="form-input"
           required
+          aria-invalid={!!errors.title}
         />
+        {errors.title && <div className="inline-error">{errors.title}</div>}
       </div>
 
       {/* Category dropdown */}
@@ -140,7 +129,7 @@ const PostForm = ({ postToEdit, onSuccess }) => {
 
       {/* Description with emoji picker */}
       <div className="post-form-group">
-        <label htmlFor="description" className="form-label">Description *</label>
+        <label htmlFor="description" className="form-label required">Description</label>
         <div className="textarea-container">
           <textarea
             id="description"
@@ -148,17 +137,18 @@ const PostForm = ({ postToEdit, onSuccess }) => {
             onChange={(e) => setDescription(e.target.value)}
             className="form-textarea"
             required
+            aria-invalid={!!errors.description}
           />
-          {/* Emoji picker toggle button */}
           <button
             type="button"
             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
             className="emoji-button"
+            aria-label="Add emoji"
           >
             <Smile size={20} />
           </button>
         </div>
-        {/* Emoji picker component */}
+        {errors.description && <div className="inline-error">{errors.description}</div>}
         {showEmojiPicker && (
           <div className="emoji-picker">
             <EmojiPicker onEmojiClick={onEmojiClick} />
@@ -166,69 +156,67 @@ const PostForm = ({ postToEdit, onSuccess }) => {
         )}
       </div>
 
-      {/* Image uploader */}
-      <div className="post-form-group">
-        <label className="form-label">Images</label>
-        <div className="media-grid">
-          {images.map((image, index) => (
-            <div key={index} className="media-item">
-              <img src={image} alt={`Upload ${index + 1}`} className="preview-image" />
-              <button type="button" onClick={() => removeImage(index)} className="remove-button">
-                <X size={16} />
-              </button>
-            </div>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          className="upload-button"
-        >
-          <ImageIcon size={20} />
-          Upload Images
-        </button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleImageUpload}
-          className="hidden-input"
-        />
+      {/* Images */}
+      <div className="section-heading">Images</div>
+      <div className="upload-info">{images.length} image(s) selected</div>
+      <div className="media-grid">
+        {images.map((image, index) => (
+          <div key={index} className="media-item">
+            <img src={image} alt={`Upload ${index + 1}`} className="preview-image" />
+            <button type="button" onClick={() => removeImage(index)} className="remove-button" aria-label="Remove image">
+              <X size={16} />
+            </button>
+          </div>
+        ))}
       </div>
+      <button
+        type="button"
+        onClick={() => fileInputRef.current?.click()}
+        className="upload-button"
+      >
+        <ImageIcon size={20} />
+        Upload Images
+      </button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={handleImageUpload}
+        className="hidden-input"
+      />
 
-      {/* Video uploader */}
-      <div className="post-form-group">
-        <label className="form-label">Videos</label>
-        <div className="media-grid">
-          {videos.map((video, index) => (
-            <div key={index} className="media-item">
-              <video src={video} controls className="preview-video" />
-              <button type="button" onClick={() => removeVideo(index)} className="remove-button">
-                <X size={16} />
-              </button>
-            </div>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={() => videoInputRef.current?.click()}
-          className="upload-button"
-        >
-          <Video size={20} />
-          Upload Videos
-        </button>
-        <input
-          ref={videoInputRef}
-          type="file"
-          accept="video/*"
-          multiple
-          onChange={handleVideoUpload}
-          className="hidden-input"
-        />
+      {/* Videos */}
+      <div className="section-heading">Videos</div>
+      <div className="upload-info">{videos.length} video(s) selected</div>
+      <div className="media-grid">
+        {videos.map((video, index) => (
+          <div key={index} className="media-item">
+            <video src={video} controls className="preview-video" />
+            <button type="button" onClick={() => removeVideo(index)} className="remove-button" aria-label="Remove video">
+              <X size={16} />
+            </button>
+          </div>
+        ))}
       </div>
+      <button
+        type="button"
+        onClick={() => videoInputRef.current?.click()}
+        className="upload-button"
+      >
+        <Video size={20} />
+        Upload Videos
+      </button>
+      <input
+        ref={videoInputRef}
+        type="file"
+        accept="video/*"
+        multiple
+        onChange={handleVideoUpload}
+        className="hidden-input"
+      />
 
-      {/* Submit button with loading indicator */}
+      {/* Submit button */}
       <button type="submit" disabled={isSubmitting} className="submit-button">
         {isSubmitting ? (
           <>
@@ -236,7 +224,7 @@ const PostForm = ({ postToEdit, onSuccess }) => {
             Processing...
           </>
         ) : (
-          'Publish Post'
+          postToEdit ? 'Update Post' : 'Publish Post'
         )}
       </button>
     </form>
