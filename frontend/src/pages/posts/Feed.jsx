@@ -22,8 +22,25 @@ const Feed = () => {
         fetchPosts();
     }, []);
 
+    const isNew = (timestamp) => {
+        if (!timestamp) return false;
+        const now = new Date();
+        const postDate = new Date(timestamp);
+        const diff = (now - postDate) / (1000 * 60 * 60 * 24);
+        return diff < 2;
+    };
+
     if (loading) return <div className="loading">Loading posts...</div>;
     if (error) return <div className="error">{error}</div>;
+
+    if (!posts.length) {
+        return (
+            <div className="feed-container">
+                <h1>Feed</h1>
+                <div className="no-posts">No posts yet. Be the first to share something!</div>
+            </div>
+        );
+    }
 
     return (
         <div className="feed-container">
@@ -31,7 +48,10 @@ const Feed = () => {
             <div className="posts-grid">
                 {posts.map((post) => (
                     <div key={post.id} className="post-card">
-                        <h2>{post.title}</h2>
+                        <h2>
+                            {post.title}
+                            {isNew(post.timestamp) && <span className="badge-new">New</span>}
+                        </h2>
                         <p className="post-description">{post.description}</p>
                         <div className="post-media">
                             {post.images && post.images.map((image, index) => (
@@ -46,7 +66,7 @@ const Feed = () => {
                         <div className="post-footer">
                             <span className="post-type">{post.postType}</span>
                             <span className="post-date">
-                                {new Date(post.timestamp).toLocaleDateString()}
+                                {post.timestamp ? new Date(post.timestamp).toLocaleDateString() : ''}
                             </span>
                         </div>
                     </div>
