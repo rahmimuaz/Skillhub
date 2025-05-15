@@ -2,33 +2,50 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
+    background: #f8f9fa;
+    min-height: 100vh;
 }
 
 .course-header {
     text-align: center;
     margin-bottom: 3rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .course-header h1 {
     color: #2c3e50;
     margin-bottom: 1rem;
+    font-size: 2.5rem;
+    font-weight: 700;
 }
 
 .course-description {
     font-size: 1.1rem;
     color: #666;
     margin-bottom: 2rem;
+    line-height: 1.6;
 }
 
 .enrollment-status {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 1.5rem;
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
     margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .progress-info {
     text-align: center;
+}
+
+.progress-info h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 .progress-bar {
@@ -38,24 +55,31 @@
     border-radius: 6px;
     margin: 1rem 0;
     overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .progress-fill {
     height: 100%;
     background-color: #4CAF50;
-    transition: width 0.3s ease;
+    transition: width 0.5s ease;
+    border-radius: 6px;
 }
 
 .progress-text {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #4CAF50;
     font-weight: 600;
+    margin: 0.5rem 0;
 }
 
 .level-info {
-    margin-top: 0.5rem;
-    font-size: 1rem;
+    margin-top: 1rem;
+    font-size: 1.1rem;
     color: #666;
+    padding: 0.5rem 1rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    display: inline-block;
 }
 
 .course-content {
@@ -63,11 +87,17 @@
 }
 
 .level-section {
-    background-color: #fff;
+    background-color: white;
     border: 1px solid #dee2e6;
-    border-radius: 8px;
+    border-radius: 12px;
     margin-bottom: 1.5rem;
     overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.level-section:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .level-section.locked {
@@ -81,13 +111,14 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
     opacity: 0;
     transition: opacity 0.3s ease;
+    z-index: 1;
 }
 
 .level-section.locked:hover::after {
@@ -97,19 +128,22 @@
 .level-section h3 {
     background-color: #f8f9fa;
     margin: 0;
-    padding: 1rem;
+    padding: 1.25rem;
     border-bottom: 1px solid #dee2e6;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 600;
 }
 
 .tasks-list {
-    padding: 1rem;
+    padding: 1.5rem;
 }
 
 .task-item {
     background-color: #fff;
     border: 1px solid #e9ecef;
-    border-radius: 6px;
-    padding: 1rem;
+    border-radius: 8px;
+    padding: 1.25rem;
     margin-bottom: 1rem;
     transition: all 0.3s ease;
 }
@@ -126,29 +160,32 @@
 .task-name {
     font-weight: 600;
     font-size: 1.1rem;
-    color: #333;
+    color: #2c3e50;
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .task-description {
     color: #666;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
 }
 
 .task-status {
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    font-weight: 500;
     transition: all 0.3s ease;
 }
 
 .task-status:hover:not(:disabled) {
     background-color: #0056b3;
+    transform: translateY(-2px);
 }
 
 .task-status.completed {
@@ -162,36 +199,52 @@
 .task-status:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+    transform: none;
 }
 
 .enroll-button {
-    background-color: #28a745;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.1rem;
+    border-radius: 8px;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 2rem auto;
 }
 
 .enroll-button:hover:not(:disabled) {
-    background-color: #218838;
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
 }
 
 .enroll-button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 .error-container {
     text-align: center;
-    padding: 2rem;
+    padding: 3rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem;
 }
 
 .error-message {
     color: #dc3545;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
 .error-actions {
@@ -202,11 +255,13 @@
 
 .back-button,
 .retry-button {
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1rem;
 }
 
 .back-button {
@@ -216,6 +271,7 @@
 
 .back-button:hover {
     background-color: #5a6268;
+    transform: translateY(-2px);
 }
 
 .retry-button {
@@ -225,10 +281,32 @@
 
 .retry-button:hover {
     background-color: #0056b3;
+    transform: translateY(-2px);
 }
 
 .loading {
     text-align: center;
-    padding: 2rem;
+    padding: 3rem;
     color: #666;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+.loading::after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #4CAF50;
+    border-radius: 50%;
+    margin-left: 1rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 } 

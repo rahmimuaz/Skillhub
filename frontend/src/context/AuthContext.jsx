@@ -21,11 +21,13 @@ export const AuthProvider = ({ children }) => {
             });
             if (response.data.authenticated) {
                 setUser(response.data.user);
+                setIsAuthenticated(true);
                 if (window.location.pathname === '/login') {
                     navigate('/');
                 }
             } else {
                 setUser(null);
+                setIsAuthenticated(false);
                 if (window.location.pathname !== '/login') {
                     navigate('/login');
                 }
@@ -33,6 +35,7 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.error('Auth status check failed:', error);
             setUser(null);
+            setIsAuthenticated(false);
             if (window.location.pathname !== '/login') {
                 navigate('/login');
             }
@@ -41,12 +44,19 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const login = async (userData) => {
+        setUser(userData);
+        setIsAuthenticated(true);
+        navigate('/');
+    };
+
     const logout = async () => {
         try {
             await axios.post('http://localhost:9006/api/auth/logout', {}, {
                 withCredentials: true
             });
             setUser(null);
+            setIsAuthenticated(false);
             navigate('/login');
         } catch (error) {
             console.error('Logout failed:', error);
@@ -58,7 +68,8 @@ export const AuthProvider = ({ children }) => {
         user,
         loading,
         logout,
-        isAuthenticated: !!user
+        login,
+        isAuthenticated
     };
 
     return (

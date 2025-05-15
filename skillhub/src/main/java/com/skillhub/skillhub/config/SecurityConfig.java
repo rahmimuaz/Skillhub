@@ -23,6 +23,10 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/courses/**").permitAll()
+                .requestMatchers("/api/plans/**").permitAll()
+                .requestMatchers("/api/posts/**").permitAll()
+                .requestMatchers("/api/comments/**").permitAll()
+                .requestMatchers("/api/reactions/**").permitAll()
                 .requestMatchers("/favicon.ico").permitAll()
                 .requestMatchers("/error").permitAll()
                 .anyRequest().authenticated()

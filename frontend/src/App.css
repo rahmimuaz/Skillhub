@@ -1,12 +1,17 @@
 .app {
     min-height: 100vh;
     background-color: #f5f6fa;
+    display: flex;
+    flex-direction: column;
 }
 
 .navbar {
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .nav-content {
@@ -68,9 +73,54 @@
 }
 
 .main-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Fixed Layout Utilities */
+.fixed-layout {
+    display: flex;
+    height: calc(100vh - 60px); /* Adjust based on navbar height */
+    overflow: hidden;
+}
+
+.fixed-sidebar {
+    width: 280px;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    overflow-y: auto;
+    position: sticky;
+    top: 0;
+}
+
+.scrollable-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
 }
 
 /* Responsive Design */
@@ -91,7 +141,18 @@
         gap: 0.5rem;
     }
 
-    .main-content {
-        padding: 1rem;
+    .fixed-layout {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .fixed-sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+
+    .scrollable-content {
+        height: auto;
     }
 } 

@@ -1,33 +1,164 @@
 .home-layout {
     display: flex;
-    height: calc(100vh - 60px); /* Adjust if there's a navbar */
-    background-color: #f5f7fa;
-    font-family: sans-serif;
+    height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    gap: 20px;
+    overflow: hidden; /* Prevent layout from scrolling */
+    position: relative;
   }
   
   .left-sidebar, .right-sidebar {
-    width: 20%;
-    padding: 20px;
-    background-color: #e0e0e0;
-    box-shadow: inset -1px 0 0 #ccc;
+    width: 280px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    height: calc(100vh - 40px); /* Account for container padding */
+    position: sticky;
+    overflow-y: auto; /* Allow sidebar to scroll if content is too long */
+    z-index: 10;
   }
 
-  
-  .left-sidebar h3,
-  .right-sidebar h3,
-  .main-content h2 {
-    margin-top: 0;
+.left-sidebar h3, .right-sidebar h3 {
+    color: #2d3748;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
   }
-  
-  .left-sidebar ul,
-  .right-sidebar ul {
+
+.left-sidebar ul, .right-sidebar ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
   }
   
-  .left-sidebar li,
-  .right-sidebar li {
-    padding: 8px 0;
-    border-bottom: 1px solid #ccc;
+.left-sidebar li, .right-sidebar li {
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    color: #4a5568;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.left-sidebar li:hover, .right-sidebar li:hover {
+    background-color: #edf2f7;
+    color: #2b6cb0;
+    transform: translateX(4px);
+}
+
+.main-content-up {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    height: calc(100vh - 40px); /* Account for container padding */
+    overflow-y: auto; /* Enable scrolling for main content */
+    z-index: 5;
+}
+
+.main-content-up h2 {
+    color: #2d3748;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e2e8f0;
   }
+
+  .course-link {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 12px 24px;
+    background-color: #4299e1;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .course-link:hover {
+    background-color: #3182ce;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Scrollbar */
+.main-content-up::-webkit-scrollbar, 
+.left-sidebar::-webkit-scrollbar, 
+.right-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.main-content-up::-webkit-scrollbar-track, 
+.left-sidebar::-webkit-scrollbar-track, 
+.right-sidebar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.main-content-up::-webkit-scrollbar-thumb, 
+.left-sidebar::-webkit-scrollbar-thumb, 
+.right-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.main-content-up::-webkit-scrollbar-thumb:hover, 
+.left-sidebar::-webkit-scrollbar-thumb:hover, 
+.right-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .home-layout {
+        flex-direction: column;
+        height: auto;
+        overflow: auto;
+    }
+
+    .left-sidebar, .right-sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+        max-height: none;
+    }
+
+    .main-content-up {
+        width: 100%;
+        height: auto;
+        max-height: none;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.left-sidebar, .right-sidebar, .main-content-up {
+    animation: fadeIn 0.5s ease-out;
+}
+  
   

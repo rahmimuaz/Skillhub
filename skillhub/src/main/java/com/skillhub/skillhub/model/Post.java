@@ -3,6 +3,8 @@ package com.skillhub.skillhub.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Document(collection = "posts")
@@ -15,12 +17,14 @@ public class Post {
     private String title;
     private String description;
     private String image; // URL or base64 image string
+    private List<String> images; // Array of image URLs or base64 strings
     private int visibilityCount;
     private LocalDateTime timestamp;
 
     // Constructors
     public Post() {
         this.timestamp = LocalDateTime.now(); // Set default timestamp
+        this.images = new ArrayList<>();
     }
 
     public Post(String userId, String postType, String title, String description, String image, int visibilityCount) {
@@ -31,6 +35,7 @@ public class Post {
         this.image = image;
         this.visibilityCount = visibilityCount;
         this.timestamp = LocalDateTime.now();
+        this.images = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -51,6 +56,9 @@ public class Post {
 
     public String getImage() { return image; }
     public void setImage(String image) { this.image = image; }
+    
+    public List<String> getImages() { return images; }
+    public void setImages(List<String> images) { this.images = images; }
 
     public int getVisibilityCount() { return visibilityCount; }
     public void setVisibilityCount(int visibilityCount) { this.visibilityCount = visibilityCount; }
