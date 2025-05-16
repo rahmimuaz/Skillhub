@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Card, Button, Row, Col, Badge, Alert, Spinner, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios from 'axios';
 import { FiPlus, FiTrash2, FiEye, FiShare2, FiBook, FiCheckCircle } from 'react-icons/fi';
@@ -11,17 +11,12 @@ const API_URL = 'http://localhost:9006/api';
 
 const LearningPlanList = () => {
   const { user, logout } = useAuth();
-  const location = useLocation();
   const [plans, setPlans] = useState([]);
   const [sharedPlans, setSharedPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [hoveredCard, setHoveredCard] = useState(null);
-  
-  // Check URL parameters for active tab
-  const searchParams = new URLSearchParams(location.search);
-  const tabParam = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState(tabParam === 'sharedPlans' ? 'sharedPlans' : 'myPlans');
+  const [activeTab, setActiveTab] = useState('myPlans');
 
   // Sample plan background images by topic/categories
   const planBackgrounds = {
@@ -153,6 +148,15 @@ const LearningPlanList = () => {
     
     return (
       <div className="plan-progress-container">
+        <div className="plan-progress-bar">
+          <div 
+            className="plan-progress-fill" 
+            style={{ 
+              width: `${progressPercentage}%`,
+              backgroundColor: statusColor 
+            }}
+          ></div>
+        </div>
         <div className="progress-text">
           <Badge bg="primary" className="me-2">{totalTopics} topics</Badge>
           <Badge 
