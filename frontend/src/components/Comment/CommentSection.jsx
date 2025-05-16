@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { postService } from '../../services/postService';
-import { MessageSquare, Trash2, Send } from 'lucide-react';
+import { MessageSquare, Trash2, Send, AlertTriangle } from 'lucide-react';
 import './CommentSection.css';
 import toast from 'react-hot-toast';
 
@@ -9,6 +9,8 @@ const CommentSection = ({ postId, currentUser }) => {
   const [newComment, setNewComment] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [deletingCommentId, setDeletingCommentId] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -46,15 +48,24 @@ const CommentSection = ({ postId, currentUser }) => {
       const comment = {
         postId: postId,
         userId: currentUser.id,
-        content: newComment
+        content: newComment,
+        // Add the user's name to ensure it's available immediately
+        userName: currentUser.name || '',
+        authorName: currentUser.name || '',
+        // Adding timestamp for immediate display before API response
+        timestamp: new Date().toISOString()
       };
       
       const newCommentData = await postService.addComment(comment);
       
-      // Add the user's name to the comment for display
+      // Combine backend data with additional user info
       const commentWithUser = {
         ...newCommentData,
-        userName: currentUser.name || `User ${currentUser.id.substring(0, 5)}`
+        userName: currentUser.name || '',
+        user: {
+          id: currentUser.id,
+          name: currentUser.name || ''
+        }
       };
       
       setComments([...comments, commentWithUser]);
@@ -66,12 +77,29 @@ const CommentSection = ({ postId, currentUser }) => {
     }
   };
 
-  const handleDeleteComment = async (commentId) => {
+  const initiateDeleteComment = (commentId) => {
+    setConfirmDelete(commentId);
+  };
+
+  const cancelDeleteComment = () => {
+    setConfirmDelete(null);
+  };
+
+  const confirmDeleteComment = async (commentId) => {
     try {
-      await postService.deleteComment(commentId);
-      setComments(comments.filter(comment => comment.id !== commentId));
-      toast.success('Comment deleted successfully');
+      setDeletingCommentId(commentId);
+      
+      // Wait for animation to complete
+      setTimeout(async () => {
+        await postService.deleteComment(commentId);
+        setComments(comments.filter(comment => comment.id !== commentId));
+        toast.success('Comment deleted successfully');
+        setDeletingCommentId(null);
+        setConfirmDelete(null);
+      }, 300);
     } catch (err) {
+      setDeletingCommentId(null);
+      setConfirmDelete(null);
       toast.error('Failed to delete comment');
       console.error('Error deleting comment:', err);
     }
@@ -90,9 +118,24 @@ const CommentSection = ({ postId, currentUser }) => {
   
   // Get display name for a comment author
   const getCommentAuthorName = (comment) => {
-    if (comment.userName) return comment.userName;
-    if (comment.authorName) return comment.authorName;
-    return `User ${comment.userId.substring(0, 5)}`;
+    // First priority: userName directly from the comment
+    if (comment.userName && comment.userName.trim() !== '') 
+      return comment.userName;
+    
+    // Second priority: authorName if available
+    if (comment.authorName && comment.authorName.trim() !== '') 
+      return comment.authorName;
+    
+    // Third priority: if this is the current user's comment, use current user's name
+    if (currentUser && comment.userId === currentUser.id && currentUser.name) 
+      return currentUser.name;
+    
+    // Fallback: if comment has a user field with a name property
+    if (comment.user && comment.user.name) 
+      return comment.user.name;
+    
+    // Last resort fallback (shouldn't happen with proper data)
+    return "Anonymous User";
   };
 
   if (loading) {
@@ -133,16 +176,46 @@ const CommentSection = ({ postId, currentUser }) => {
       ) : (
         <div className="comments-list">
           {comments.map((comment) => (
-            <div key={comment.id} className="comment-item">
+            <div 
+              key={comment.id} 
+              className={`comment-item ${deletingCommentId === comment.id ? 'deleting' : ''}`}
+            >
               <div className="comment-header">
-                <span className="comment-author">{getCommentAuthorName(comment)}</span>
+                <span className={`comment-author ${getCommentAuthorName(comment) === "Anonymous User" ? "anonymous" : ""}`}>
+                  {getCommentAuthorName(comment) !== "Anonymous User" && (
+                    <span className="comment-author-avatar">
+                      {getCommentAuthorName(comment).charAt(0).toUpperCase()}
+                    </span>
+                  )}
+                  {getCommentAuthorName(comment)}
+                </span>
                 <span className="comment-date">{formatDate(comment.timestamp)}</span>
               </div>
               <div className="comment-content">{comment.content}</div>
-              {comment.userId === currentUser?.id && (
+              
+              {comment.userId === currentUser?.id && confirmDelete === comment.id ? (
+                <div className="delete-confirm">
+                  <span className="confirm-message">
+                    <AlertTriangle size={14} /> Delete?
+                  </span>
+                  <button 
+                    onClick={() => confirmDeleteComment(comment.id)}
+                    className="confirm-yes"
+                  >
+                    Yes
+                  </button>
+                  <button 
+                    onClick={cancelDeleteComment}
+                    className="confirm-no"
+                  >
+                    No
+                  </button>
+                </div>
+              ) : comment.userId === currentUser?.id && (
                 <button 
                   className="delete-comment" 
-                  onClick={() => handleDeleteComment(comment.id)}
+                  onClick={() => initiateDeleteComment(comment.id)}
+                  aria-label="Delete comment"
                 >
                   <Trash2 size={16} />
                 </button>

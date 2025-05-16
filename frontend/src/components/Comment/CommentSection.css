@@ -62,17 +62,47 @@
   background-color: #f9f9f9;
   border-radius: 8px;
   position: relative;
+  transition: background-color 0.2s;
+  border-left: 3px solid transparent;
+}
+
+.comment-item:hover {
+  background-color: #f0f0f0;
+  border-left-color: #1890ff;
 }
 
 .comment-header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
+  padding-right: 30px; /* Make space for delete button */
 }
 
 .comment-author {
-  font-weight: 500;
+  font-weight: 600;
   color: #333;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.comment-author-avatar {
+  width: 24px;
+  height: 24px;
+  background-color: #1890ff;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Display anonymous users in a different style */
+.comment-author.anonymous {
+  color: #888;
+  font-style: italic;
 }
 
 .comment-date {
@@ -84,30 +114,123 @@
   font-size: 14px;
   line-height: 1.5;
   color: #444;
+  word-break: break-word;
 }
 
 .delete-comment {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: #999;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #f56c6c;
   cursor: pointer;
-  padding: 5px;
-  display: none;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .comment-item:hover .delete-comment {
-  display: block;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .delete-comment:hover {
-  color: #f56c6c;
+  background-color: #f56c6c;
+  color: white;
+  transform: scale(1.1);
+}
+
+.delete-comment:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(245, 108, 108, 0.5);
+}
+
+/* Delete confirmation styles */
+.delete-confirm {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+  animation: fadeIn 0.2s ease;
+}
+
+.confirm-message {
+  display: flex;
+  align-items: center;
+  color: #e53e3e;
+  font-size: 12px;
+  font-weight: 500;
+  gap: 4px;
+}
+
+.confirm-yes, .confirm-no {
+  border: none;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.confirm-yes {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.confirm-yes:hover {
+  background-color: #c53030;
+}
+
+.confirm-no {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
+
+.confirm-no:hover {
+  background-color: #cbd5e0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .comments-loading, .comments-error {
   padding: 20px;
   text-align: center;
   color: #666;
+}
+
+/* Animation for comment deletion */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+}
+
+.comment-item.deleting {
+  animation: fadeOut 0.3s forwards;
 } 

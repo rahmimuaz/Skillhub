@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageSquare, Eye, Calendar, User } from 'lucide-react';
+import { MessageSquare, Eye, Calendar, User, Edit, Trash2 } from 'lucide-react';
 import ReactionBar from '../Reaction/ReactionBar';
 import CommentSection from '../Comment/CommentSection';
 import './PostCard.css';
 
-const PostCard = ({ post, currentUser }) => {
+const PostCard = ({ post, currentUser, onEdit, onDelete }) => {
   const [showComments, setShowComments] = useState(false);
   
   // Use provided currentUser or default if not provided
@@ -24,21 +24,37 @@ const PostCard = ({ post, currentUser }) => {
     setShowComments(!showComments);
   };
 
+  // Check if the current user is the author of the post
+  const isAuthor = currentUser && post.userId === currentUser.id;
+
   // Display a user name instead of just an ID
   const getDisplayName = () => {
     // First priority: userName directly from the post object (from API)
-    if (post.userName) return post.userName;
+    if (post.userName && post.userName.trim() !== '') 
+      return post.userName;
     
     // Second priority: authorName if available
-    if (post.authorName) return post.authorName;
+    if (post.authorName && post.authorName.trim() !== '') 
+      return post.authorName;
     
     // Third priority: use the current user's name if it's the user's own post
-    if (currentUser && post.userId === currentUser.id && currentUser.name) {
+    if (currentUser && post.userId === currentUser.id && currentUser.name) 
       return currentUser.name;
-    }
     
-    // Fallback: display a shortened ID with "User" prefix
-    return `User ${post.userId ? post.userId.substring(0, 5) : 'Unknown'}`;
+    // Fourth priority: if post has user object with name
+    if (post.user && post.user.name) 
+      return post.user.name;
+    
+    // Fallback: generic name rather than ID
+    return "Anonymous User";
+  };
+
+  const handleEdit = () => {
+    if (onEdit) onEdit(post);
+  };
+
+  const handleDelete = () => {
+    if (onDelete) onDelete(post.id);
   };
 
   return (
@@ -53,10 +69,6 @@ const PostCard = ({ post, currentUser }) => {
           <span className="post-card-date">
             <Calendar size={16} />
             {formatDate(post.timestamp)}
-          </span>
-          <span className="post-card-views">
-            <Eye size={16} />
-            {post.visibilityCount || 0}
           </span>
         </div>
       </div>
@@ -115,6 +127,28 @@ const PostCard = ({ post, currentUser }) => {
           <MessageSquare size={18} />
           Comments
         </button>
+        
+        {/* Show edit/delete buttons only if the user is the author */}
+        {isAuthor && (
+          <div className="post-card-manage-buttons">
+            <button 
+              className="post-card-edit-button"
+              onClick={handleEdit}
+              aria-label="Edit post"
+            >
+              <Edit size={18} />
+              Edit
+            </button>
+            <button 
+              className="post-card-delete-button"
+              onClick={handleDelete}
+              aria-label="Delete post"
+            >
+              <Trash2 size={18} />
+              Delete
+            </button>
+          </div>
+        )}
       </div>
       
       {showComments && (

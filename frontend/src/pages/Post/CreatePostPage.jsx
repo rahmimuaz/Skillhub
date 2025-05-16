@@ -19,7 +19,7 @@ const CreatePostPage = () => {
       <div className="create-post-card">
         {!isFormVisible ? (
           <div className="create-post-preview">
-            <h2>Share Your Story</h2>
+            <h2>Share Your Post</h2>
             <p className="create-post-subtitle">Share your thoughts, ideas, or experiences with the community</p>
             <button className="create-post-button" onClick={toggleForm}>
               Create Post
