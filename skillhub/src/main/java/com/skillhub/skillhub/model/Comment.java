@@ -11,6 +11,7 @@ public class Comment {
     private String userId;
     private String content;
     private LocalDateTime timestamp = LocalDateTime.now();
+    private String parentId; // <-- Added for replies
 
     // Getters and Setters remain the same
     public String getId() {
@@ -51,5 +52,13 @@ public class Comment {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

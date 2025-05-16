@@ -104,76 +104,29 @@ export const postService = {
         }
     },
 
-    // Comments methods
+     // Comments methods
     getCommentsByPostId: async (postId) => {
         if (!postId) {
             throw new Error('Post ID is required');
         }
-        
         try {
             const response = await api.get(`/comments/post/${postId}`);
-            
-            // Process comments to ensure they have user name information
-            const comments = response.data;
-            
-            // If comments come with user info, ensure names are properly formatted
-            const processedComments = comments.map(comment => {
-                // If comment already has user name info, return as is
-                if (comment.userName || comment.authorName) {
-                    return comment;
-                }
-                
-                // If comment has a user object with name
-                if (comment.user && comment.user.name) {
-                    return {
-                        ...comment,
-                        userName: comment.user.name
-                    };
-                }
-                
-                // Default case - return the comment as is
-                return comment;
-            });
-            
-            return processedComments;
+            return response.data;
         } catch (error) {
             console.error(`Error fetching comments for post ${postId}:`, error);
-            
-            // Provide more detailed error information
             if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
                 console.error('Response data:', error.response.data);
                 console.error('Response status:', error.response.status);
             } else if (error.request) {
-                // The request was made but no response was received
                 console.error('No response received from server');
             }
-            
             throw error;
         }
     },
 
     addComment: async (comment) => {
         try {
-            // Ensure the comment has user name information
-            const enhancedComment = { ...comment };
-            
-            // If no userName or authorName is provided, try to fetch the user's info
-            if (!enhancedComment.userName && !enhancedComment.authorName) {
-                try {
-                    // This is a simplified example - you might need to fetch from your user service
-                    const userInfo = await api.get(`/users/${comment.userId}`);
-                    if (userInfo.data && userInfo.data.name) {
-                        enhancedComment.userName = userInfo.data.name;
-                    }
-                } catch (userErr) {
-                    console.warn('Could not fetch user info for comment:', userErr);
-                    // Continue with the original comment if user info fetch fails
-                }
-            }
-            
-            const response = await api.post('/comments', enhancedComment);
+            const response = await api.post('/comments', comment);
             return response.data;
         } catch (error) {
             console.error('Error adding comment:', error);
@@ -191,6 +144,16 @@ export const postService = {
         }
     },
 
+    updateComment: async (commentId, data) => {
+        try {
+            const response = await api.put(`/comments/${commentId}`, data);
+            return response.data;
+        } catch (error) {
+            console.error(`Error updating comment ${commentId}:`, error);
+            throw error;
+        }
+    },
+
     // Reactions methods
     getReactionsByPostId: async (postId) => {
         try {
@@ -198,7 +161,7 @@ export const postService = {
             return response.data;
         } catch (error) {
             console.error(`Error fetching reactions for post ${postId}:`, error);
-            return []; // Return empty array on error to avoid breaking the UI
+            return [];
         }
     },
 
@@ -208,7 +171,7 @@ export const postService = {
             return response.data;
         } catch (error) {
             console.error(`Error fetching reaction counts for post ${postId}:`, error);
-            return {}; // Return empty object on error to avoid breaking the UI
+            return {};
         }
     },
 
@@ -222,14 +185,13 @@ export const postService = {
         }
     },
     
-    // Check if a user has reacted with a specific reaction type
     hasUserReacted: async (postId, userId, reactionType) => {
         try {
             const response = await api.get(`/reactions/post/${postId}/user/${userId}/reacted?reactionType=${reactionType}`);
             return response.data;
         } catch (error) {
             console.error(`Error checking if user has reacted:`, error);
-            return false; // Assume not reacted on error
+            return false;
         }
     }
-}; 
+};

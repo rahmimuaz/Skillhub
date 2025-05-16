@@ -20,10 +20,25 @@ public class CommentController {
         return commentService.getCommentsByPostId(postId);
     }
 
+    @GetMapping("/replies/{parentId}")
+    public List<Comment> getReplies(@PathVariable String parentId) {
+        return commentService.getReplies(parentId);
+    }
+
     @PostMapping
     public ResponseEntity<Comment> addComment(@RequestBody Comment comment) {
         Comment savedComment = commentService.addComment(comment);
         return ResponseEntity.ok(savedComment);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Comment> updateComment(@PathVariable String id, @RequestBody Comment comment) {
+        Comment updatedComment = commentService.updateComment(id, comment);
+        if (updatedComment != null) {
+            return ResponseEntity.ok(updatedComment);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
