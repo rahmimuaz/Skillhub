@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 // import { Container, Navbar, Nav, Button, Row, Col } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import LearningPlanForm from './pages/learningplan/LearningPlanForm';
 import LearningPlanDetail from './pages/learningplan/LearningPlanDetail';
 import LearningPlanList from './pages/learningplan/LearningPlanList';
