@@ -59,7 +59,7 @@ public class CourseService {
             for (int j = 0; j < level.getTasks().size(); j++) {
                 Course.Task task = level.getTasks().get(j);
                 if (task.getTaskId() == null || task.getTaskId().isEmpty()) {
-                    task.setTaskId("task_" + System.currentTimeMillis() + "_" + j);
+                    task.setTaskId("task_" + System.currentTimeMillis() + "_level" + (i + 1) + "_task" + j);
                 }
             }
         }
@@ -90,7 +90,7 @@ public class CourseService {
                     for (int j = 0; j < level.getTasks().size(); j++) {
                         Course.Task task = level.getTasks().get(j);
                         if (task.getTaskId() == null || task.getTaskId().isEmpty()) {
-                            task.setTaskId("task_" + System.currentTimeMillis() + "_" + j);
+                            task.setTaskId("task_" + System.currentTimeMillis() + "_level" + (i + 1) + "_task" + j);
                         }
                     }
                 }
