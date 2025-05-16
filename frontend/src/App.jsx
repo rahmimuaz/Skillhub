@@ -1,13 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
-// import { Container, Navbar, Nav, Button, Row, Col } from 'react-bootstrap';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LearningPlanForm from './pages/learningplan/LearningPlanForm';
 import LearningPlanDetail from './pages/learningplan/LearningPlanDetail';
 import LearningPlanList from './pages/learningplan/LearningPlanList';
 import EditLearningPlanForm from './pages/learningplan/EditLearningPlanForm';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'; // Optional: For custom styles like background or footer fixing
+import './App.css'; // Optional: For custom styles
+
 
 // --- Dashboard Component (Initial View) ---
 function Dashboard() {
