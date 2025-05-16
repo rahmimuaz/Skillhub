@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageSquare, Eye, Calendar, User, Edit, Trash2 } from 'lucide-react';
+import { MessageSquare, Eye, Calendar, User } from 'lucide-react';
 import ReactionBar from '../Reaction/ReactionBar';
 import CommentSection from '../Comment/CommentSection';
 import './PostCard.css';
 
-const PostCard = ({ post, currentUser, onEdit, onDelete }) => {
+const PostCard = ({ post, currentUser }) => {
   const [showComments, setShowComments] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(null);
 
@@ -57,6 +57,10 @@ const PostCard = ({ post, currentUser, onEdit, onDelete }) => {
           <span className="post-card-date">
             <Calendar size={16} />
             {formatDate(post.timestamp)}
+          </span>
+          <span className="post-card-views">
+            <Eye size={16} />
+            {post.visibilityCount || 0}
           </span>
         </div>
       </div>
@@ -171,28 +175,6 @@ const PostCard = ({ post, currentUser, onEdit, onDelete }) => {
           <MessageSquare size={18} />
           Comments
         </button>
-        
-        {/* Show edit/delete buttons only if the user is the author */}
-        {isAuthor && (
-          <div className="post-card-manage-buttons">
-            <button 
-              className="post-card-edit-button"
-              onClick={handleEdit}
-              aria-label="Edit post"
-            >
-              <Edit size={18} />
-              Edit
-            </button>
-            <button 
-              className="post-card-delete-button"
-              onClick={handleDelete}
-              aria-label="Delete post"
-            >
-              <Trash2 size={18} />
-              Delete
-            </button>
-          </div>
-        )}
       </div>
 
       {showComments && (

@@ -5,11 +5,6 @@
   padding: 20px;
   margin-bottom: 20px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  height: 100%;
 }
 
 .post-card:hover {
@@ -28,7 +23,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 600;
+  font-weight: 500;
   color: #333;
 }
 
@@ -63,7 +58,6 @@
   font-size: 20px;
   margin-bottom: 10px;
   color: #222;
-  transition: color 0.2s ease;
 }
 
 .post-card-title:hover {
@@ -86,7 +80,6 @@
   border-radius: 6px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .post-card-image {
@@ -151,12 +144,7 @@
 .post-card-actions {
   margin-top: 15px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  border-top: 1px solid #eee;
-  padding-top: 15px;
+  justify-content: flex-end;
 }
 
 .post-card-comment-button {
@@ -170,51 +158,10 @@
   cursor: pointer;
   transition: all 0.2s ease;
   color: #666;
-  font-weight: 500;
 }
 
 .post-card-comment-button:hover {
   background-color: #e8e8e8;
-  color: #1890ff;
-}
-
-.post-card-manage-buttons {
-  display: flex;
-  gap: 8px;
-}
-
-.post-card-edit-button,
-.post-card-delete-button {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.post-card-edit-button {
-  background-color: #f0f7ff;
-  color: #1890ff;
-}
-
-.post-card-edit-button:hover {
-  background-color: #1890ff;
-  color: white;
-}
-
-.post-card-delete-button {
-  background-color: #fff2f0;
-  color: #f5222d;
-}
-
-.post-card-delete-button:hover {
-  background-color: #f5222d;
-  color: white;
 }
 
 .post-card-comments {

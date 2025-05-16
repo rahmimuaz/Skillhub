@@ -3,7 +3,7 @@ import { postService } from '../../services/postService';
 import { useAuth } from '../../context/AuthContext';
 import PostCard from '../../components/Post/PostCard';
 import { Plus, RefreshCw } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Feed.css';
 import toast from 'react-hot-toast';
 
@@ -12,7 +12,6 @@ const Feed = ({ onNewPost }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { user } = useAuth();
-    const navigate = useNavigate();
 
     // If auth context is not available, create a mock user for development
     const currentUser = user || { id: "user123", name: "Current User" };
@@ -33,24 +32,6 @@ const Feed = ({ onNewPost }) => {
             toast.error('Failed to load posts');
         } finally {
             setLoading(false);
-        }
-    };
-
-    const handleEdit = (post) => {
-        // Navigate to the edit page or handle edit state
-        navigate(`/post/edit/${post.id}`, { state: { post } });
-    };
-
-    const handleDelete = async (postId) => {
-        if (confirm('Are you sure you want to delete this post?')) {
-            try {
-                await postService.deletePost(postId);
-                setPosts(posts.filter(post => post.id !== postId));
-                toast.success('Post deleted successfully');
-            } catch (error) {
-                toast.error('Failed to delete post');
-                console.error('Error deleting post:', error);
-            }
         }
     };
 
@@ -112,19 +93,14 @@ const Feed = ({ onNewPost }) => {
                     )}
                 </div>
             ) : (
-                <div className="post-grid-container">
-                    <div className="post-grid">
-                        {posts.map((post) => (
-                            <div key={post.id} className="post-grid-item">
-                                <PostCard 
-                                    post={post}
-                                    currentUser={currentUser}
-                                    onEdit={handleEdit}
-                                    onDelete={handleDelete}
-                                />
-                            </div>
-                        ))}
-                    </div>
+                <div className="post-grid">
+                    {posts.map((post) => (
+                        <PostCard 
+                            key={post.id} 
+                            post={post}
+                            currentUser={currentUser}
+                        />
+                    ))}
                 </div>
             )}
         </div>
