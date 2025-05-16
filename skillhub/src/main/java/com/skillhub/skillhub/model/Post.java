@@ -17,7 +17,8 @@ public class Post {
     private String title;
     private String description;
     private String image; // URL or base64 image string
-    private List<String> images; // Array of image URLs or base64 strings
+    private List<String> images;
+    private List<String> videos; // Array of image URLs or base64 strings
     private int visibilityCount;
     private LocalDateTime timestamp;
 
@@ -25,6 +26,7 @@ public class Post {
     public Post() {
         this.timestamp = LocalDateTime.now(); // Set default timestamp
         this.images = new ArrayList<>();
+        this.videos = new ArrayList<>();
     }
 
     public Post(String userId, String postType, String title, String description, String image, int visibilityCount) {
@@ -36,6 +38,7 @@ public class Post {
         this.visibilityCount = visibilityCount;
         this.timestamp = LocalDateTime.now();
         this.images = new ArrayList<>();
+        this.videos = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -59,6 +62,10 @@ public class Post {
     
     public List<String> getImages() { return images; }
     public void setImages(List<String> images) { this.images = images; }
+
+    public List<String> getVideos() { return videos; }
+    public void setVideos(List<String> videos) { this.videos = videos; }
+
 
     public int getVisibilityCount() { return visibilityCount; }
     public void setVisibilityCount(int visibilityCount) { this.visibilityCount = visibilityCount; }

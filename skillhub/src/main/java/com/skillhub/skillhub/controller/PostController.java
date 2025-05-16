@@ -86,6 +86,7 @@ public class PostController {
         response.put("postType", post.getPostType());
         response.put("image", post.getImage());
         response.put("images", post.getImages());
+        response.put("videos", post.getVideos());
         response.put("visibilityCount", post.getVisibilityCount());
         response.put("timestamp", post.getTimestamp());
         response.put("userId", post.getUserId());

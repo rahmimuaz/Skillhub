@@ -12,6 +12,8 @@ const PostList = ({ onEdit, onNewPost }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [viewMode, setViewMode] = useState('card'); // 'card' or 'table'
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('');
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -52,6 +54,19 @@ const PostList = ({ onEdit, onNewPost }) => {
     });
   };
 
+  // Get unique categories from posts
+  const categories = Array.from(new Set(posts.map(post => post.postType))).filter(Boolean);
+
+  // Filter posts by search and category
+  const filteredPosts = posts.filter(post => {
+    const matchesCategory = !category || post.postType === category;
+    const matchesSearch =
+      !search ||
+      post.title.toLowerCase().includes(search.toLowerCase()) ||
+      post.description.toLowerCase().includes(search.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -80,6 +95,27 @@ const PostList = ({ onEdit, onNewPost }) => {
       <div className="post-header">
         <h2 className="post-title">All Posts</h2>
         <div className="post-actions">
+          {/* Category Filter */}
+          <select
+            className="category-select"
+            value={category}
+            onChange={e => setCategory(e.target.value)}
+            style={{ marginRight: 8 }}
+          >
+            <option value="">All Categories</option>
+            {categories.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
+          {/* Text Search */}
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search posts..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            style={{ marginRight: 8 }}
+          />
           {onNewPost && (
             <button
               onClick={onNewPost}
@@ -113,7 +149,7 @@ const PostList = ({ onEdit, onNewPost }) => {
         </div>
       </div>
 
-      {posts.length === 0 ? (
+      {filteredPosts.length === 0 ? (
         <div className="empty-state">
           <p>No posts found.</p>
           {onNewPost && (
@@ -124,7 +160,7 @@ const PostList = ({ onEdit, onNewPost }) => {
         </div>
       ) : viewMode === 'card' ? (
         <div className="post-grid">
-          {posts.map((post) => (
+          {filteredPosts.map((post) => (
             <PostCard 
               key={post.id} 
               post={post} 
@@ -147,7 +183,7 @@ const PostList = ({ onEdit, onNewPost }) => {
               </tr>
             </thead>
             <tbody>
-              {posts.map((post) => (
+              {filteredPosts.map((post) => (
                 <tr key={post.id} className="table-row">
                   <td className="table-data font-medium">{post.title}</td>
                   <td className="table-data text-gray-600">{post.description}</td>
@@ -162,6 +198,15 @@ const PostList = ({ onEdit, onNewPost }) => {
                         />
                       ))}
                       {post.videos?.length > 0 && (
+                        <video
+                          src={post.videos[0]}
+                          className="media-image"
+                          style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 4 }}
+                          controls={false}
+                          muted
+                        />
+                      )}
+                      {post.videos?.length > 1 && (
                         <div className="video-indicator">
                           <Video size={16} />
                           <span>{post.videos.length}</span>

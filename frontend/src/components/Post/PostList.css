@@ -250,3 +250,11 @@
 .retry-button:hover {
   background-color: #40a9ff;
 }
+
+/* Add to PostList.css */
+.category-select, .search-input {
+  padding: 7px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}

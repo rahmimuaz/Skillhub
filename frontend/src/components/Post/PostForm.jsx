@@ -171,6 +171,16 @@ const PostForm = ({ postToEdit, onSuccess }) => {
           <option value="Programming">Programming</option>
           <option value="Cooking">Cooking</option>
           <option value="Photography">Photography</option>
+          <option value="Art">Art</option>
+          <option value="Music">Music</option>
+          <option value="Travel">Travel</option>
+          <option value="Fitness">Fitness</option>
+          <option value="Technology">Technology</option>
+          <option value="Business">Business</option>
+          <option value="Gaming">Gaming</option>
+          <option value="Fashion">Fashion</option>
+          <option value="Health">Health</option>
+          <option value="Sports">Sports</option>
         </select>
       </div>
 
