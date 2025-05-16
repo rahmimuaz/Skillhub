@@ -112,7 +112,30 @@ export const postService = {
         
         try {
             const response = await api.get(`/comments/post/${postId}`);
-            return response.data;
+            
+            // Process comments to ensure they have user name information
+            const comments = response.data;
+            
+            // If comments come with user info, ensure names are properly formatted
+            const processedComments = comments.map(comment => {
+                // If comment already has user name info, return as is
+                if (comment.userName || comment.authorName) {
+                    return comment;
+                }
+                
+                // If comment has a user object with name
+                if (comment.user && comment.user.name) {
+                    return {
+                        ...comment,
+                        userName: comment.user.name
+                    };
+                }
+                
+                // Default case - return the comment as is
+                return comment;
+            });
+            
+            return processedComments;
         } catch (error) {
             console.error(`Error fetching comments for post ${postId}:`, error);
             
@@ -133,7 +156,24 @@ export const postService = {
 
     addComment: async (comment) => {
         try {
-            const response = await api.post('/comments', comment);
+            // Ensure the comment has user name information
+            const enhancedComment = { ...comment };
+            
+            // If no userName or authorName is provided, try to fetch the user's info
+            if (!enhancedComment.userName && !enhancedComment.authorName) {
+                try {
+                    // This is a simplified example - you might need to fetch from your user service
+                    const userInfo = await api.get(`/users/${comment.userId}`);
+                    if (userInfo.data && userInfo.data.name) {
+                        enhancedComment.userName = userInfo.data.name;
+                    }
+                } catch (userErr) {
+                    console.warn('Could not fetch user info for comment:', userErr);
+                    // Continue with the original comment if user info fetch fails
+                }
+            }
+            
+            const response = await api.post('/comments', enhancedComment);
             return response.data;
         } catch (error) {
             console.error('Error adding comment:', error);

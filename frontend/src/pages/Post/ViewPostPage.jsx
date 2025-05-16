@@ -171,23 +171,11 @@ const ViewPostPage = () => {
               <div className="user-posts-grid">
                 {userPosts.map((post) => (
                   <div key={post.id} className="user-post-container">
-                    <div className="user-post-actions">
-                      <button 
-                        className="edit-post-button" 
-                        onClick={() => handleEdit(post)}
-                      >
-                        Edit
-                      </button>
-                      <button 
-                        className="delete-post-button" 
-                        onClick={() => handleDelete(post.id)}
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
                     <PostCard 
                       post={post}
                       currentUser={user}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
                     />
                   </div>
                 ))}

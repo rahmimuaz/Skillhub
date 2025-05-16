@@ -66,7 +66,7 @@ const Login = () => {
     return (
         <div className="login-container">
             <div className="login-card">
-                <h1>Welcome to Learning Tracker</h1>
+                <h1>Welcome to SkillHub</h1>
                 <p>{isLogin ? 'Sign in to continue' : 'Create an account'}</p>
                 
                 {error && <div className="error-message">{error}</div>}
