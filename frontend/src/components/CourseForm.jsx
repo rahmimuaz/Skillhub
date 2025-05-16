@@ -11,7 +11,20 @@ const CourseForm = ({ course, onSave, onCancel }) => {
 
     useEffect(() => {
         if (course) {
-            setFormData(course);
+            // Map levels and tasks to expected field names
+            const mappedLevels = (course.levels || []).map(level => ({
+                ...level,
+                levelName: level.levelName || level.name || '',
+                tasks: (level.tasks || []).map(task => ({
+                    ...task,
+                    taskName: task.taskName || task.name || '',
+                    taskDescription: task.taskDescription || task.description || ''
+                }))
+            }));
+            setFormData({
+                ...course,
+                levels: mappedLevels
+            });
         }
     }, [course]);
 
