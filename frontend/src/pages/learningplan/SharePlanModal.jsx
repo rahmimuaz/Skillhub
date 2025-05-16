@@ -30,11 +30,11 @@ const SharePlanModal = ({ show, onHide, onSubmit }) => {
         
         {success ? (
           <Alert variant="success">
-            Plan shared successfully! You can view it in the "View Shared Plans" tab.
+            Plan shared successfully! You can view it in the "Shared with Me" tab.
           </Alert>
         ) : (
           <div>
-            <p>This plan will be available in the "View Shared Plans" tab.</p>
+            <p>Are you sure you want to share this learning plan?</p>
             <Button variant="primary" onClick={handleSubmit}>
               Share Plan
             </Button>

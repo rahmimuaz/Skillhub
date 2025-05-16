@@ -3,37 +3,32 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Card, Button, ListGroup, Badge, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import SharePlanModal from './SharePlanModal';
+import { useAuth } from '../../context/AuthContext';
 
 const API_URL = 'http://localhost:9006/api';
 
 const LearningPlanDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showShareModal, setShowShareModal] = useState(false);
 
-  // Get user ID from storage or use a default one for testing
-  const getUserId = () => {
-    return localStorage.getItem('userId') || sessionStorage.getItem('userId') || 'user123';
-  };
-
-  const SHARED_USER_ID = "sharedUser123"; // Using the same shared user ID as in your API file
-
   useEffect(() => {
     const fetchPlan = async () => {
-      if (!id) {
-        setError('Invalid plan ID');
+      if (!id || !user) {
+        setError('Invalid plan ID or user not authenticated');
         setLoading(false);
         return;
       }
 
       try {
         const response = await axios.get(`${API_URL}/plans/${id}`, {
+          withCredentials: true,
           headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'Content-Type': 'application/json'
           }
         });
         
@@ -61,9 +56,9 @@ const LearningPlanDetail = () => {
     if (window.confirm('Are you sure you want to delete this learning plan?')) {
       try {
         await axios.delete(`${API_URL}/plans/${id}`, {
+          withCredentials: true,
           headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'Content-Type': 'application/json'
           }
         });
         navigate('/');
@@ -79,17 +74,25 @@ const LearningPlanDetail = () => {
   };
 
   const handleShareSubmit = async () => {
+    if (!user || !user.id) {
+      setError('User not authenticated');
+      return;
+    }
+
     try {
-      await axios.post(`${API_URL}/plans/${id}/share/${SHARED_USER_ID}`, {}, {
+      const response = await axios.post(`${API_URL}/plans/${id}/share/${user.id}`, {}, {
+        withCredentials: true,
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
+          'Content-Type': 'application/json'
         }
       });
-      setShowShareModal(false);
-      navigate('/');
+      
+      if (response.data) {
+        setPlan(response.data);
+        setShowShareModal(false);
+      }
     } catch (err) {
-      setError(`Failed to share learning plan: ${err.message || 'Unknown error'}`);
+      setError(`Failed to share learning plan: ${err.response?.data?.message || err.message || 'Unknown error'}`);
       console.error('Error sharing plan:', err);
     }
   };
