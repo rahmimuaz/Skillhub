@@ -1,0 +1,458 @@
+/* LearningPlanDetail.css */
+
+/* Fixed Layout and Sidebar styles */
+.fixed-layout {
+  display: flex;
+  height: 92vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  gap: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.fixed-sidebar {
+  width: 280px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 0px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  height: calc(100vh - 40px);
+  position: sticky;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.left-sidebar {
+  background-color: #e2e8f0;
+  color: #2d3748;
+  padding: 0;
+  border-radius: 0;
+}
+
+.right-sidebar {
+  width: 300px;
+}
+
+.scrollable-content {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  height: calc(100vh - 40px);
+  overflow-y: auto;
+  z-index: 5;
+}
+
+/* Sidebar User Section */
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  padding: 10px;
+  margin-right: 15px;
+}
+
+.user-info h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.user-info p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Sidebar Navigation */
+.sidebar-nav {
+  padding: 20px 0;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #2d3748;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.sidebar-item span {
+  margin-left: 15px;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgb(89, 84, 233);
+}
+
+.sidebar-item.active {
+  border-left: 4px solid #3498db;
+}
+
+/* Sidebar Logout Button */
+.sidebar-logout {
+  display: flex;
+  align-items: center;
+  margin: 20px;
+  padding: 12px 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgb(208, 60, 60);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: calc(100% - 40px);
+}
+
+.sidebar-logout span {
+  margin-left: 15px;
+}
+
+.sidebar-logout:hover {
+  background-color: rgba(231, 76, 60, 0.8);
+}
+
+/* Sidebar Sections for Right Sidebar */
+.sidebar-section {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #2d3748;
+}
+
+/* Learning Plan Detail Styles */
+.plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.plan-title-section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 8px;
+}
+
+.plan-description {
+  color: #718096;
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.btn-primary {
+  background: #4299e1;
+  border-color: #4299e1;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #4299e1;
+  border-color: #4299e1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(49, 130, 206, 0.2);
+}
+
+.btn-danger {
+  background: #e53e3e;
+  border-color: #e53e3e;
+  transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+  background: #c53030;
+  border-color: #c53030;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(229, 62, 62, 0.2);
+}
+
+.btn-info {
+  background: #00b5d8;
+  border-color: #00b5d8;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-info:hover {
+  background: #0987a0;
+  border-color: #0987a0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 181, 216, 0.2);
+}
+
+/* Topics Section */
+.topics-section {
+  margin-top: 32px;
+}
+
+.topics-section h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 10px;
+}
+
+.topic-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: none;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.topic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.topic-card .card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.topic-date-info {
+  font-size: 13px;
+  color: #718096;
+  margin-bottom: 12px;
+}
+
+.topic-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.badge-success {
+  background-color: #48bb78;
+}
+
+.badge-warning {
+  background-color: #ecc94b;
+  color: #744210;
+}
+
+/* Resources Section */
+.resources-section {
+  margin-top: 16px;
+}
+
+.resources-section h5 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 12px;
+}
+
+.resource-list {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.resource-list .list-group-item {
+  padding: 12px 16px;
+  border-left: none;
+  border-right: none;
+  transition: background-color 0.2s;
+}
+
+.resource-list .list-group-item:hover {
+  background-color: #f7fafc;
+}
+
+.resource-list a {
+  color: #4299e1;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.resource-list a:hover {
+  color: #3182ce;
+  text-decoration: underline;
+}
+
+.resource-type-badge {
+  background-color: #a0aec0;
+  font-size: 11px;
+  padding: 4px 8px;
+}
+
+/* Plan Stats in Right Sidebar */
+.plan-stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.plan-stats-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: #f7fafc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.plan-stats-item .label {
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.plan-stats-item .value {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+/* Loading and Error States */
+.loading-container, 
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .fixed-layout {
+    flex-direction: column;
+    height: auto;
+    overflow: auto;
+  }
+
+  .fixed-sidebar {
+    width: 100%;
+    height: auto;
+    max-height: none;
+  }
+
+  .right-sidebar {
+    order: 3;
+  }
+
+  .scrollable-content {
+    width: 100%;
+    height: auto;
+    max-height: none;
+  }
+  
+  .plan-header {
+    flex-direction: column;
+  }
+  
+  .action-buttons {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .action-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .action-buttons .btn {
+    width: 100%;
+  }
+}
+
+/* Toast Notification Styles */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.toast {
+  min-width: 250px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  border: none;
+}
+
+.toast-header {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #2d3748;
+  padding: 12px 16px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.toast-body {
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.bg-success .toast-body {
+  background-color: #48bb78;
+}
+
+/* Animation for Toast */
+@keyframes toast-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.toast.showing {
+  animation: toast-in-right 0.3s;
+} 

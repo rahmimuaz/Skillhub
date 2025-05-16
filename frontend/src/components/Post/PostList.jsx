@@ -123,13 +123,18 @@ const PostList = ({ onEdit, onNewPost }) => {
           )}
         </div>
       ) : viewMode === 'card' ? (
-        <div className="post-grid">
-          {posts.map((post) => (
-            <PostCard 
-              key={post.id} 
-              post={post} 
-            />
-          ))}
+        <div className="post-grid-container">
+          <div className="post-grid">
+            {posts.map((post) => (
+              <div key={post.id} className="post-grid-item">
+                <PostCard 
+                  post={post}
+                  onEdit={() => onEdit(post)}
+                  onDelete={() => handleDelete(post.id)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
         <div className="table-container">
