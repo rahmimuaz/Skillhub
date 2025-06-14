@@ -9,7 +9,6 @@ A full-stack web application designed to enable users to share skills, engage wi
 - **Database:** MongoDB
 - **Others:** RESTful API, Axios, JWT (optional)
 
----
 
 ## 🚀 Features
 
@@ -30,9 +29,9 @@ A full-stack web application designed to enable users to share skills, engage wi
 - Users can update and share their progress.
 - Visual indicators and status updates for learning goals.
 
----
 
----
+
+
 
 ## 🛠️ Setup Instructions
 
@@ -46,7 +45,7 @@ A full-stack web application designed to enable users to share skills, engage wi
 2. Install dependencies:
 
 
----
+
 
 ## 📌 Future Improvements
 
@@ -55,13 +54,13 @@ A full-stack web application designed to enable users to share skills, engage wi
 - Progress analytics and graphs
 - Mobile responsiveness
 
----
+
 
 ## 📞 Contact / Contributions
 
 If you'd like to contribute or report an issue, feel free to open a pull request or contact the maintainers.
 
----
+
 
 
 
