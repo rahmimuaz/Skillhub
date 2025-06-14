@@ -1,4 +1,4 @@
-#Skill Sharing Website
+##Skill Sharing Website
 
 A full-stack web application designed to enable users to share skills, engage with others through posts, and track their personal learning journeys. Built using **Spring Boot** for the backend and **React** for the frontend.
 
